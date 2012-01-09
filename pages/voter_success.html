@@ -1,0 +1,262 @@
+<link rel="stylesheet" href="http://solm.me/play/css/style.css">
+<style type="text/css">
+* { margin: 0; padding: 0; }
+
+#aswift_0 {
+position: fixed;top: 50%; left:50%; margin-left: -120px; margin-top: 480px; width: 728px; height: 90px; z-index: 4;
+}
+
+#vfull {
+clear: both;
+top: 50%;
+left: 50%;
+margin-left: -50%;
+margin-top: -50%;
+position: fixed;
+width: 100%;
+height: 500%;
+background-color: #0000b8;
+opacity:0.6;
+filter:alpha(opacity=60);
+-moz-opacity:0.6;
+
+background-image:url('http://z4.ifrm.com/30294/192/0/p1133807/blue_diagonal_stripes_background_seamless.gif');
+background-repeat: repeat;
+background-opacity: 50%;
+background-size: 50%;
+background-attachment: fixed;
+}
+
+div#jcontainer {
+width: 100%;
+height: 100%;
+}
+
+div#main {
+position: fixed;
+top: 50%;
+left: 50%;
+margin-left: -275px;
+margin-top: -220px;
+width: 550px;
+height: 500px;
+background-color: #ffffff;
+box-shadow:rgba(0,0,0,0.5) 0px 0px 36px; border-radius:12px;
+z-index: 2;
+}
+
+div#flag {
+margin: 20px auto 0 auto;
+left:0px;
+top:0px;
+position: absolute;
+opacity:0.08;
+filter:alpha(opacity=08);
+-moz-opacity:0.08;
+z-index: -2;
+width: 100%;
+height: 100%;
+}
+
+div#main form, input, label { z-index: 5; }
+
+form {
+font: normal normal normal 1em "Century Gothic";
+margin: 15px;
+}
+
+input[type="text"] { 
+background-color: #fff;
+background-image:url('http://z4.ifrm.com/30294/192/0/p1133822/stripestrans.png');
+background-repeat: repeat;
+background-opacity: 50%;
+background-size: 50%;
+background-attachment: fixed;
+border:2px solid black;
+}
+
+input[type="text"] {
+border-width: 1px;
+border-style: solid;
+border-color: #fefefe;
+width: 240px;
+height: 1.5em;
+border-bottom-width: 1px;
+margin-left: 6px;
+font-family: "Century Gothic";
+font-size: 1em;
+color: #000;
+font-color: #000;
+margin-top: 15px;
+}
+
+input[type="text"]:first {
+margin-top: 0px;
+padding-top: 0px;
+}
+
+input[type="text"]:hover {
+outline: none;
+}
+
+input[type="text"]:focus {
+outline: none;
+color: #000;
+}
+
+fieldset {
+order: 1px solid #000000;
+width: 100%;
+height: 30%;
+overflow: hidden;
+margin-top: 20px;
+}
+
+legend { margin-left: 24px; }
+
+fieldset label {
+margin-left: 10px;
+}
+
+fieldset input {
+margin: 3px 3px 0px 15px;
+}
+
+
+input[type="submit"] {
+float: right;
+font-family: "Century Gothic";
+font-size: 1.5em;
+margin-top: 25px;
+}
+
+input[type="checkbox"] {
+margin-top: 15px;
+}
+
+span.certify {
+font-size: .8em;
+margin-left: 5px;
+text-align: justify;
+}
+
+.button
+{        
+  display: inline-block;
+  white-space: nowrap;
+  background-color: #ccc;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#eee), to(#ccc));
+  background-image: -webkit-linear-gradient(top, #eee, #ccc);
+  background-image: -moz-linear-gradient(top, #eee, #ccc);
+  background-image: -ms-linear-gradient(top, #eee, #ccc);
+  background-image: -o-linear-gradient(top, #eee, #ccc);
+  background-image: linear-gradient(top, #eee, #ccc);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#eeeeee', EndColorStr='#cccccc');
+  border: 1px solid #777;
+  padding: 0 1.5em;
+  margin: 0.5em;
+  font: bold 1em/1.3em Arial, Helvetica;
+  text-decoration: none;
+  color: #333;
+  text-shadow: 0 1px 0 rgba(255,255,255,.8);
+  -moz-border-radius: .2em;
+  -webkit-border-radius: .2em;
+  border-radius: .2em;
+  -moz-box-shadow: 0 0 1px 1px rgba(255,255,255,.8) inset, 0 1px 0 rgba(0,0,0,.3);
+  -webkit-box-shadow: 0 0 1px 1px rgba(255,255,255,.8) inset, 0 1px 0 rgba(0,0,0,.3);
+  box-shadow: 0 0 1px 1px rgba(255,255,255,.8) inset, 0 1px 0 rgba(0,0,0,.3);
+}
+
+.button:hover
+{
+  background-color: #ddd;        
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#fafafa), to(#ddd));
+  background-image: -webkit-linear-gradient(top, #fafafa, #ddd);
+  background-image: -moz-linear-gradient(top, #fafafa, #ddd);
+  background-image: -ms-linear-gradient(top, #fafafa, #ddd);
+  background-image: -o-linear-gradient(top, #fafafa, #ddd);
+  background-image: linear-gradient(top, #fafafa, #ddd);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#fafafa', EndColorStr='#dddddd');        
+}
+
+.button:active
+{
+  -moz-box-shadow: 0 0 4px 2px rgba(0,0,0,.3) inset;
+  -webkit-box-shadow: 0 0 4px 2px rgba(0,0,0,.3) inset;
+  box-shadow: 0 0 4px 2px rgba(0,0,0,.3) inset;
+  position: relative;
+  top: 1px;
+}
+
+.button:focus
+{
+  outline: 0;
+  background: #fafafa;
+}    
+
+.button:before
+{
+  background: #ccc;
+  background: rgba(0,0,0,.1);
+  float: left;        
+  width: 1em;
+  text-align: center;
+  font-size: 1.5em;
+  margin: 0 1em 0 -1em;
+  padding: 0 .2em;
+  -moz-box-shadow: 1px 0 0 rgba(0,0,0,.5), 2px 0 0 rgba(255,255,255,.5);
+  -webkit-box-shadow: 1px 0 0 rgba(0,0,0,.5), 2px 0 0 rgba(255,255,255,.5);
+  box-shadow: 1px 0 0 rgba(0,0,0,.5), 2px 0 0 rgba(255,255,255,.5);
+  -moz-border-radius: .15em 0 0 .15em;
+  -webkit-border-radius: .15em 0 0 .15em;
+  border-radius: .15em 0 0 .15em;
+        pointer-events: none;        
+}
+
+.save:before
+{
+  content: "&#092;2714";        
+}
+
+table, td, tr { border: 0; }
+
+td, tr { padding: 15px 15px 15px 15px; background: transparent none repeat scroll 0% 0%; z-index: -2; }
+
+a { color: #003566; }
+
+a:hover {
+color:#388abe;
+text-decoration:none;
+text-shadow: 1px 0px 20px aqua;
+      -webkit-transition: width 0.3s; /*Safari & Chrome*/
+      transition: width 0.3s;
+      -moz-transition: width 0.3s; /* Firefox 4 */
+      -o-transition: width 0.3s; /* Opera */
+}
+</style>
+<div id="vfull"></div>
+<div id="jcontainer">
+<div id="main">
+<div id="flag"><center><img src='http://i45.tinypic.com/2uemg5z.png'></center></div>
+<br /><br />
+<span style="font: bold normal normal 1.5em 'Century Gothic';"><center>YOUR BALLOT HAS BEEN SUCCESSFULLY CAST<br>THANK YOU FOR VOTING!</center></span>
+<br /><br />
+
+<span style="font: normal normal normal 1em 'Century Gothic'; margin: 15px;"><center>You may also be interested in these other opportunities to get more involved with the region:</center><br>
+
+<table><tr><td><center><a href="http://tnp-wire.tumblr.com/">Read "The North Pacific Wire"</a><br />
+Our region's publicly-owned newspaper.</center></td><td>
+
+<center><a href="http://forum.thenorthpacific.org/topic/6860216/">Register as a Citizen</a><br />
+Formalizing your residency here in The North Pacific.</center></td></tr><td>
+
+<center><a href="http://forum.thenorthpacific.org/topic/6923980/1/">Join the Regional Assembly</a><br />
+In the Regional Assembly you get to vote on important legislative matters that concern our region, and in elections for all positions other than the Council of Five.</center></td><td>
+
+<center><a href="http://forum.thenorthpacific.org/topic/6903327/">Join the North Pacific Army</a><br />
+Sign-up to fight the good fight, protect the region and pursue her interests on the battlefield.</center></td></tr></table></span>
+<br />
+<br />
+<br />
+</div>
+</div>

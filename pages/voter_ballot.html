@@ -1,0 +1,50 @@
+<script type="text/javascript" src="http://z5.ifrm.com/9057/121/0/f5151052/jquerytablesortermin.js"></script>
+<link rel="stylesheet" href="http://www.thenorthpacific.org/voter/style.css">
+<div id="flag"><center><img src='http://i45.tinypic.com/2uemg5z.png'></center></div>
+<form action="http://www.thenorthpacific.org/voter/vote.php" id="ballot" method="POST" onsubmit="return cert_check();">
+<label for="name">Your TNP Nation Name:</label><input placeholder="Nation Name..." type="text" id="name" name="name">
+<br>
+<label for="voter_id">Your Unique Voter ID:</label>&nbsp;&nbsp;&nbsp;&nbsp;<input placeholder="00000000" type="text" id="voter_id" name="id">
+<br>
+
+<fieldset><legend>Your Ballot</legend><p>Please rank the candidates, 1st being most preferred and 19th being least preferred:</p><table id="ranking"><tbody><tr><td>Aurora Di Laurentis<td><select name="vote[Aurora Di Laurentis]" size="1"><option label="1st" value="1">1st</option><option label="2nd" value="2">2nd</option><option label="3rd" value="3">3rd</option><option label="4th" value="4">4th</option><option label="5th" value="5">5th</option><option label="6th" value="6">6th</option><option label="7th" value="7">7th</option><option label="8th" value="8">8th</option><option label="9th" value="9">9th</option><option label="10th" value="10">10th</option><option label="11th" value="11">11th</option><option label="12th" value="12">12th</option><option label="13th" value="13">13th</option><option label="14th" value="14">14th</option><option label="15th" value="15">15th</option><option label="16th" value="16">16th</option><option label="17th" value="17">17th</option><option label="18th" value="18">18th</option><option label="19th" value="19" selected="selected">19th</option></select></tr><tr><td>Scandigrad<td><select name="vote[Scandigrad]" size="1"><option label="1st" value="1">1st</option><option label="2nd" value="2">2nd</option><option label="3rd" value="3">3rd</option><option label="4th" value="4">4th</option><option label="5th" value="5">5th</option><option label="6th" value="6">6th</option><option label="7th" value="7">7th</option><option label="8th" value="8">8th</option><option label="9th" value="9">9th</option><option label="10th" value="10">10th</option><option label="11th" value="11">11th</option><option label="12th" value="12">12th</option><option label="13th" value="13">13th</option><option label="14th" value="14">14th</option><option label="15th" value="15">15th</option><option label="16th" value="16">16th</option><option label="17th" value="17">17th</option><option label="18th" value="18">18th</option><option label="19th" value="19" selected="selected">19th</option></select></tr><tr><td>Eluvatar<td><select name="vote[Eluvatar]" size="1"><option label="1st" value="1">1st</option><option label="2nd" value="2">2nd</option><option label="3rd" value="3">3rd</option><option label="4th" value="4">4th</option><option label="5th" value="5">5th</option><option label="6th" value="6">6th</option><option label="7th" value="7">7th</option><option label="8th" value="8">8th</option><option label="9th" value="9">9th</option><option label="10th" value="10">10th</option><option label="11th" value="11">11th</option><option label="12th" value="12">12th</option><option label="13th" value="13">13th</option><option label="14th" value="14">14th</option><option label="15th" value="15">15th</option><option label="16th" value="16">16th</option><option label="17th" value="17">17th</option><option label="18th" value="18">18th</option><option label="19th" value="19" selected="selected">19th</option></select></tr><tr><td>Pasargad<td><select name="vote[Pasargad]" size="1"><option label="1st" value="1">1st</option><option label="2nd" value="2">2nd</option><option label="3rd" value="3">3rd</option><option label="4th" value="4">4th</option><option label="5th" value="5">5th</option><option label="6th" value="6">6th</option><option label="7th" value="7">7th</option><option label="8th" value="8">8th</option><option label="9th" value="9">9th</option><option label="10th" value="10">10th</option><option label="11th" value="11">11th</option><option label="12th" value="12">12th</option><option label="13th" value="13">13th</option><option label="14th" value="14">14th</option><option label="15th" value="15">15th</option><option label="16th" value="16">16th</option><option label="17th" value="17">17th</option><option label="18th" value="18">18th</option><option label="19th" value="19" selected="selected">19th</option></select></tr><tr><td>Biyah<td><select name="vote[Biyah]" size="1"><option label="1st" value="1">1st</option><option label="2nd" value="2">2nd</option><option label="3rd" value="3">3rd</option><option label="4th" value="4">4th</option><option 
+
+<input type="checkbox" name="certify" id="certify"><span class="certify"> I hereby recogonize that any attempt to vote multiple times using multiple nation accounts is forbidden; The North Pacific only allows one vote per player; and; I acknowledge that the government of the North Pacific may investigate any violations of this policy and may prosecute violators in this regard.</span>
+<input type="hidden" name="scheck" value="1">
+<input type="submit" name="submit" class="button save" value="Submit your Vote!">
+</form>
+<br><span style="font-size: 8pt;">(Code by <a href="http://www.nationstates.net/nation=solm">Solm</a> and <a href="http://forum.thenorthpacific.org/profile/198669/">Unibot</a> for the UEP and <a href="http://forum.thenorthpacific.org/profile/197685/">Eluvatar</a>)</span>
+</div>
+</div>
+<script type="text/javascript">
+$("#newsbox").hide();
+
+function cert_check(form) {
+  if( $("#certify")[0].checked == 1 )
+    return true;
+  alert("You did not certify!");
+  return false;
+}
+if(window.location.hash) { $("#voter_id").val(window.location.hash.substring(1)); }
+if(window.location.search) { $("#name").val(decodeURIComponent(window.location.search.substring(1).replace(/&#092;+/g, '%20'))); }
+/**
+ * below 2 lines Copyright (c) 2009 Chad Smith (http://twitter.com/chadsmith)
+ * http://www.opensource.org/licenses/mit-license.php
+ **/
+(function(d){d.fn.shuffle=function(c){c=[];return this.each(function(){c.push(d(this).clone(true))}).each(function(a,b){d(b).replaceWith(c[a=Math.floor(Math.random()*c.length)]);c.splice(a,1)})};d.shuffle=function(a){return d(a).shuffle()}})(jQuery);
+
+$("#ranking tbody tr").shuffle();
+
+$(document).ready(function(){
+  $("#ballot tbody").before('<thead><tr><th>Candidate</th><th>Preference</th></tr></thead>');
+});
+$("#ballot select").change(function(){
+  $("#ranking").tablesorter({
+ //   headers: {0:{sorter:false},1:{sorter:false}},
+    sortList:[[1,0]],
+    textExtraction:function(node){
+      return $(node).children().val();
+    }
+  });
+});
+</script>
