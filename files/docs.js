@@ -1,18 +1,15 @@
-function documents_scale() {
-    rem = $(window).height()-150-$("#documents>div").first().height()-$("#documents>table>thead").height();
-    $("#documents tbody").height(rem);
-}
 function toc_callback() {
     this.style.display = "table-row";
-    documents_scale();
 }
-documents_scale();
 docs = { cur: null,
 constitution: { id: "#constitution", link: "#link_const", fetched: false, url: "http://forum.thenorthpacific.org/topic/633857/1/ .c_post", toc:{ id: "#toc_const", selector: "#constitution>td>*+strong"} },
 BoR: { id: "#BoR", link: "#link_bor", fetched: false, url: "http://forum.thenorthpacific.org/topic/633856/1/ .c_post", toc: null },
 laws: { id: "#laws", link: "#link_laws", fetched: false, url: "http://forum.thenorthpacific.org/single/?p=205153&t=633858 .c_post", toc: {id: "#toc_laws", selector: "#laws>td>strong>span"} },
 courtRules: { id: "#cr", link: "#link_cr", fetched: false, url: "http://forum.thenorthpacific.org/single/?p=8015997&t=6738296 .c_post", toc: null },
-cops: { id: "#cops", link: "#link_cops", fetched: false, url: "http://forum.thenorthpacific.org/single/?p=209115&t=633858 .c_post", toc: null }}
+cops: { id: "#cops", link: "#link_cops", fetched: false, url: "http://forum.thenorthpacific.org/single/?p=209115&t=633858 .c_post", toc: null },
+abst: { id: "#abst", link: "#link_abst", fetched: false, url: "http://forum.thenorthpacific.org/single/?p=226599&t=635106 .c_post", toc: null },
+spt: { id: "#spt", link: "#link_spt", fetched: false, url: "http://forum.thenorthpacific.org/single/?p=8015562&t=635106 .c_post", toc: null }}
+
 function document_clicked(doc) {
     $(doc.link).addClass("current")
     toc = doc.toc;
@@ -38,10 +35,9 @@ function document_clicked(doc) {
                 }
                 $(doc.id+" a.article").each(function(index,value){
                     value.setAttribute("name",doc.id+"_"+index);
-                    toc_ol(index).append("<li><a href=\"#"+doc.id+"_"+index+"\">"+value.text+"</a></li>");
+                    toc_ol(index).append("<li><a href=\"#"+doc.id+"_"+index+"\">"+value.text()+"</a></li>");
                 } );
             }
-            documents_scale();
         } );
         doc.fetched = true;
     }
@@ -50,9 +46,9 @@ function document_clicked(doc) {
        if( docs.cur != null ) {
            $(docs.cur.id).slideUp(documents_scale);
            $(docs.cur.link).removeClass("current");
-           if(docs.cur.toc){$(docs.cur.toc.id).slideUp(documents_scale);}
+           if(docs.cur.toc){$(docs.cur.toc.id).slideUp();}
        }
-       $(doc.id).slideDown(documents_scale);
+       $(doc.id).slideDown();
        if(toc){ 
            $(toc.id).slideDown(toc_callback);
        }
@@ -62,6 +58,7 @@ function document_clicked(doc) {
        $(doc.id).slideUp();
        $("#documents").slideUp();
     }
+    return false;
 }
 function document_hide() {
     $(docs.cur.id).slideUp();
