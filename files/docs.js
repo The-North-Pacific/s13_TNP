@@ -8,7 +8,9 @@ laws: { id: "#laws", link: "#link_laws", fetched: false, url: "http://forum.then
 courtRules: { id: "#cr", link: "#link_cr", fetched: false, url: "http://forum.thenorthpacific.org/single/?p=8015997&t=6738296 .c_post", toc: null },
 cops: { id: "#cops", link: "#link_cops", fetched: false, url: "http://forum.thenorthpacific.org/single/?p=209115&t=633858 .c_post", toc: null },
 abst: { id: "#abst", link: "#link_abst", fetched: false, url: "http://forum.thenorthpacific.org/single/?p=226599&t=635106 .c_post", toc: null },
-spt: { id: "#spt", link: "#link_spt", fetched: false, url: "http://forum.thenorthpacific.org/single/?p=8015562&t=635106 .c_post", toc: null }}
+spt: { id: "#spt", link: "#link_spt", fetched: false, url: "http://forum.thenorthpacific.org/single/?p=8015562&t=635106 .c_post", toc: null },
+oos: { id: "#oos", link: "#link_oos", fetched: false, url: "http://forum.thenorthpacific.org/single/?p=8046494&t=635106 .c_post", toc: null },
+rnr: { id: "#rnr", link: "#link_rnr", fetched: false, url: "http://forum.thenorthpacific.org/single/?p=8046495&t=635106 .c_post", toc: null }}
 
 function document_clicked(doc) {
     $(doc.link).addClass("current")
