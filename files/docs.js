@@ -14,6 +14,9 @@ function document_clicked(doc) {
     toc = doc.toc;
     if( ! doc.fetched ) {
         $(doc.id).load(doc.url, function() {
+            if( doc.wrap ) {
+              $(doc.id+' '+doc.url.split(' ').pop()).wrap(doc.wrap);
+            }
             if( toc ) {
                 tocs = $(toc.selector);
                 toc_count = tocs.size();
