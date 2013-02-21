@@ -1,0 +1,228 @@
+<script type="text/javascript" src="http://z5.ifrm.com/9057/121/0/f5151052/jquerytablesortermin.js"></script>
+<style type="text/css">
+table.SC {
+overflow:hidden;
+word-wrap:break-word;
+width:auto;
+}
+
+table.SC tr.hidden {
+display:none;
+}
+
+table.SC td {
+font-style:italic;
+font-weight:700;
+margin-left:8px;
+}
+
+table.SC#sc a, table.SC#sc a:visited, table.SC a.security_council, table.SC a.security_council:visited {
+color: darkgoldenrod;
+}
+
+table.SC#delegate a, table.SC#delegate a:visited, table.SC a.delegate, table.SC a.delegate:visited{
+color: firebrick;
+}
+
+table.SC#vice_delegate a, table.SC#vice_delegate a:visited, table.SC a.vice_delegate, table.SC a.vice_delegate:visited {
+color: maroon;
+}
+
+table.SC a.delegate_emeritus, table.SC a.delegate_emeritus:visited {
+color: crimson;
+}
+
+table.SC a.vice_delegate_emeritus, table.SC a.vice_delegate_emeritus:visited {
+color: sienna;
+}
+
+table.SC a.regional_assembly, table.SC a.regional_assembly:visited, table.SC a.regional_assembly:hover {
+color: darkorange;
+}
+
+table.SC a.north_pacific_army, table.SC a.north_pacific_army:visited, table.SC a.north_pacific_army:hover {
+color: slategray;
+}
+
+table.SC a.other, table.SC a.other:visited {
+color: midnightblue;
+}
+
+table.SC a:active, table.SC a:hover {
+color: #00CC00;
+}
+
+th.header {
+  background-image: url(http://z5.ifrm.com/9057/121/0/f5151056/bg.gif),url("http://z3.ifrm.com/229/151/0/p190408/h2.jpg");
+  background-repeat: no-repeat,repeat-x;
+  background-position: right center,top center;
+  cursor: pointer;
+  padding-right:21px;
+}
+
+th.headerSortDown {
+  background-image: url(http://z5.ifrm.com/9057/121/0/f5151055/desc.gif),url("http://z3.ifrm.com/229/151/0/p190408/h2.jpg");
+}
+
+th.headerSortUp {
+  background-image: url(http://z5.ifrm.com/9057/121/0/f5151054/asc.gif),url("http://z3.ifrm.com/229/151/0/p190408/h2.jpg");
+}
+</style>
+<script type="text/javascript">
+function show_nation(idx,nation) {
+  return idx < 20;
+}
+
+function legal_min(del_endos) {
+  return Math.min(del_endos/2,50);
+}
+
+function legal_max(del_endos) {
+  return Math.max(del_endos*0.85,del_endos-20);
+}
+
+function nation_class(nation, tnp, sc) {
+  if( nation.name == tnp.legal_delegate.name )
+    return 'delegate';
+  if( nation.name == tnp.vice_delegate.name )
+    return 'vice_delegate';
+  if( sc[nation.name] )
+    return 'security_council';
+  if( tnp.former_delegates.indexOf(nation.name) >= 0 )
+    return 'delegate_emeritus';
+  if( tnp.former_vice_delegates.indexOf(nation.name) >= 0 )
+    return 'vice_delegate_emeritus';
+  if( tnp.npa.indexOf(nation.name) >= 0 )
+    return 'north_pacific_army';
+  if( tnp.ra.indexOf(nation.name) >= 0 )
+    return 'regional_assembly';
+  return 'other';
+}
+
+function sc_color(del, member) {
+  if( member.name == del.name )
+    return "darkgreen";
+  if( member.endos < legal_min(del.endos) )
+    return "pink";
+  if( member.endos > legal_max(del.endos) )
+    return "crimson";
+  if( member.endos >= legal_max(del.endos)-10 )
+    return "darkkhaki";
+  if( member.endos <= legal_min(del.endos)+10 )
+    return "darkkhaki";
+  return "darkgreen";
+}
+
+function nation_color(del,vd,sc,nation) {
+  if( nation.name in sc )
+    return sc_color(del,nation);
+  var o={};
+  o[del.name]=true;
+  o[vd.name]=true;
+  if( nation.name in o )
+    return sc_color(del,nation);
+  if( nation.endos > vd.endos )
+    return "tomato";
+  if( nation.endos > del.endos-50 )
+    return "crimson";
+  if( nation.endos >= del.endos-100 )
+    return "darkkhaki";
+  return "darkgreen";
+}
+
+if( window.location.hostname == "forum.thenorthpacific.org" ) {
+  var alerts = { 
+    msg: "http://forum.thenorthpacific.org/single/?p=8074444&t=6983682 .c_post", 
+    lvl: "http://forum.thenorthpacific.org/single/?p=8074445&t=6983682 .c_post"
+  };
+} else {
+  var alerts = {
+    msg: "http://testforum.thenorthpacific.org/single/?p=8043297&t=7944582 .c_post", 
+    lvl: "http://testforum.thenorthpacific.org/single/?p=8043298&t=7944582 .c_post"
+  };
+}
+
+function show_all_top() {
+  $('.hidden').removeClass('hidden');
+}
+
+function update_info(tnp) {
+  $(document).ready(function(){
+    $("#delegate td.nation").replaceWith('<td class="nation"><a href="http://www.nationstates.net/nation='+tnp.legal_delegate.name+'">'+tnp.legal_delegate.Name+"</a></td>");
+    $("#delegate td.endos").replaceWith('<td class="endos">'+tnp.legal_delegate.endos+"</td>");
+    $("#delegate td.min").replaceWith('<td class="min">'+legal_min(tnp.legal_delegate.endos)+"</td>");
+    $("#delegate td.max").replaceWith('<td class="max">'+legal_max(tnp.legal_delegate.endos)+"</td>");
+    $("#vice_delegate td.nation").replaceWith('<td class="nation"><a href="http://www.nationstates.net/nation='+tnp.vice_delegate.name+'">'+tnp.vice_delegate.Name+"</a></td>");
+    $("#vice_delegate td.endos").replaceWith('<td class="endos">'+tnp.vice_delegate.endos+"</td>");
+    str='<table class="SC" width="300" id="sc"><thead><tr><th>#</th><th>Member</th><th>Endorsements</th><th>Influence</th></tr></thead><tbody>';
+    var sc={};
+    $.each( tnp.sc, function(idx,member){
+      sc[member.name]=true;
+      str+='<tr><th>&nbsp;</th><th><a href="http://www.nationstates.net/nation='+member.name+'">'+member.Name+"</a></th>";
+      //str+='<td style=" color:'+sc_color(tnp.legal_delegate.endos,member.endos)+';">'+member.endos+"</td></tr>";
+     str+='<td style=" color:'+sc_color(tnp.legal_delegate,member)+';">'+member.endos+"</td><td>"+member.influence_rank+"</td></tr>";
+    });
+    str+="</tbody></table>";
+    $("#sc").replaceWith(str);
+    var cb=function(){
+      $(".c_post").replaceWith(function(){
+        return $(this).contents();
+      });
+    };
+    $("#alert_msg").load(alerts.msg, cb);
+    $("#alert_lvl").load(alerts.lvl, cb);
+    $("#sc").after('<p style="font-style:italic; font-weight:bold; font-size:12pt;">Top TNP Nations</p><p>by endorsements or influence</p><p><a href="#show_all" onclick="show_all_top();" name="show_all">Show all</a></p>',$("<table>",{
+      id:'top_nations',
+      class:'SC tablesorter',
+      width:'300'
+    }).append('<thead><tr><th>#</th><th>Member</th><th>Received</th><th>Given</th><th>Rank</th><th>Score</th></tr></thead>',$('<tbody>').append($.map( tnp.top, function(nation,idx){
+      return (show_nation(idx,nation) ? '<tr>' : '<tr class="hidden">' ) +'<th>'+(idx+1)+'</th><th><a href="http://www.nationstates.net/nation='+nation.name+'" class="'+nation_class(nation,tnp,sc)+'" title="'+nation_class(nation,tnp,sc).replace(/_/g,' ')+'">'+nation.Name+'</a></th><td style="color:'+nation_color(tnp.legal_delegate,tnp.vice_delegate,sc,nation)+'">'+nation.endos+'</td><td>'+nation.endos_given+'</td><td>'+nation.influence_rank+'</td><td>'+nation.influence_score+'</td></tr>' ;
+    }).join())));
+    $("#sc").tablesorter({headers:{1:{sorter:false},3:{sorter:false}}});
+    $("#sc tbody th:first-child").text(function(idx,o){return idx+1;});
+    $("#top_nations").tablesorter({sortList:[[2,1]],headers:{0:{sorter:false},1:{sorter:false},4:{sorter:false}}});
+    $("#top_nations").bind('sortStart',function(){
+      $("#top_nations tbody th:first-child").text(function(idx,o){return '';});
+    }).bind('sortEnd',function(){
+      $("#top_nations tbody th:first-child").text(function(idx,o){return idx+1;});
+    });
+    if( window.location.hash == '#show_all' ){
+      show_all_top();
+      document.getElementById('top_nations').scrollIntoView(true);
+    }
+  });
+}
+</script>
+<script type="text/javascript" src="http://www.thenorthpacific.org/region_info.php?jsonp=update_info"></script>
+
+<center><h1><a href="http://forum.thenorthpacific.org/forum/39623/">Security Council of the North Pacific</a></h1>
+<img src="http://www.thenorthpacific.org/images/forum/sc-seal.png" alt="">
+<br><noscript><p style="font-style:italic; font-weight:bold; font-size:12pt; color:red;">Because you have javascript disabled, the information below may be wildly out of date</p></noscript>
+<p style="font-style:italic; font-weight:bold; font-size:12pt;">Alerts</p><p style="width:400px" id="alert_msg"><a href="http://www.nationstates.net/nation=-t-h-o-r-">-T-h-o-r-</a> and <a href="http://www.nationstates.net/nation=sheep_face">Sheep Face</a> have been caught sending messages which impersonate the government. -T-h-o-r-'s messages were also false and a clear fraud attempting to make trouble and do not represent the official government of The North  Pacific.
+</p>
+
+<h3 style="width:400px">Regional alert level: <span id="alert_lvl"><span style=" color: darkkhaki; ">Yellow</span></span></h3>
+
+<p style="font-style:italic; font-weight:bold; font-size:12pt;">Overview</p>
+<table class="SC" id="delegate">
+<tbody><tr><th>Legal Delegate:</th>
+<td class="nation"><a href="http://www.nationstates.net/nation=zemnaya_svoboda">Zemnaya Svoboda</a></td></tr>
+<tr><th>Delegate Endorsements:</th>
+<td class="endos">318</td></tr>
+<tr><th>Legal Minimum Endorsements for Security Council members:</th>
+<td class="min">50</td></tr>
+<tr><th>Legal Maximum Endorsements for Security Council members:</th>
+<td class="max">298</td></tr>
+</tbody></table>
+
+<p style="font-style:italic; font-weight:bold; font-size:12pt;">Vice Delegate</p>
+<table class="SC" id="vice_delegate">
+<tbody><tr><th>Vice Delegate:</th>
+<td class="nation"><a href="http://www.nationstates.net/nation=mcmasterdonia">McMasterdonia</a></td></tr>
+<tr><th>Vice Delegate Endorsements:</th>
+<td class="endos">298</td></tr>
+</tbody></table><br>
+
+
+<p style="font-style:italic; font-weight:bold; font-size:12pt;">Security Council</p>
+<table class="SC" id="sc" width="300"><tbody><tr><th>Member</th><th>Endorsements</th></tr><tr><th><a href="http://www.nationstates.net/nation=pasargad">Pasargad</a></th><td style=" color:darkgreen;">235</td></tr><tr><th><a href="http://www.nationstates.net/nation=grosseschnauzer">Grosseschnauzer</a></th><td style=" color:darkgreen;">240</td></tr><tr><th><a href="http://www.nationstates.net/nation=zemnaya_svoboda">Zemnaya Svoboda</a></th><td style=" color:darkgreen;">318</td></tr><tr><th><a href="http://www.nationstates.net/nation=denarian_knight">Denarian Knight</a></th><td style=" color:darkgreen;">226</td></tr><tr><th><a href="http://www.nationstates.net/nation=great_bights_mum">Great Bights Mum</a></th><td style=" color:darkgreen;">199</td></tr><tr><th><a href="http://www.nationstates.net/nation=former_english_colony">Former English Colony</a></th><td style=" color:darkgreen;">191</td></tr><tr><th><a href="http://www.nationstates.net/nation=blackshear41">Blackshear41</a></th><td style=" color:darkgreen;">174</td></tr></tbody></table></center>
