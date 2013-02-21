@@ -1,0 +1,267 @@
+<!-- TOPMENU -->
+<script type="text/javascript">
+
+/******************************************
+* Snow Effect Script- By Altan d.o.o. ([url]http://www.altan.hr/snow/index.html[/url])
+* Visit Dynamic Drive DHTML code library ([url]http://www.dynamicdrive.com/[/url]) for full source code
+* Last updated Nov 9th, 05' by DD. This notice must stay intact for use
+******************************************/
+
+// Configure snowsrc()) to change URL path to the snow image
+// Configure no to change number of snow to render
+var sw = Math.random() < 0.95;
+if( sw ) { sw = location.hash != '#ee' }
+if( sw ) {
+  if( window.location.hostname == "forum.thenorthpacific.org"	) {
+    var snowflake_setting="choice_2363";
+  } else {
+    var snowflake_setting="choice_11114";
+  }
+  var snowsrc=function(){ 
+    if( Math.random() < 0.98 ) {
+      var snowflakes=["http://www.thenorthpacific.org/images/snowflake1.png",
+                      "http://www.thenorthpacific.org/images/snowflake3.png",
+                      "http://www.thenorthpacific.org/images/snowflake3.png",
+                      "http://www.thenorthpacific.org/images/snowflake4.png",
+                      "http://www.thenorthpacific.org/images/Snowflake5.png"];
+    } else {
+      var snowflakes=["http://z2.ifrm.com/10711/28/0/e22881//e22881.gif",
+                      "http://z2.ifrm.com/10711/28/0/e22881//e22881.gif",
+                      "http://z2.ifrm.com/10711/28/0/e22881//e22881.gif",
+                      "http://z2.ifrm.com/10711/28/0/e22911//e22911.gif",
+                      "http://i2.ifrm.com/4675/146/emo/babyfulhead.gif",
+                      "http://i2.ifrm.com/4675/146/emo/IP.gif",
+                      "http://www.thenorthpacific.org/images/wilks.gif"]
+    }
+    return snowflakes[Math.floor(Math.random()*snowflakes.length)]; 
+  };
+  var no = parseInt(window.localStorage.snowflake_number) || 35;
+  $.get('http://'+window.location.hostname+'/home/?c=6',function(data){
+    var set_no = parseInt($(data).find('input[name='+snowflake_setting+']').val());
+    if( set_no !== NaN ) {
+      window.localStorage.snowflake_number = set_no;
+    }
+  });
+} else {
+  var snowsrc=function(){
+    var snowflakes=["http://z2.ifrm.com/10711/28/0/v1/favicon.ico",
+                    "http://z2.ifrm.com/10711/28/0/v1/favicon.ico",
+                    "http://www.thenorthpacific.org/images/Eye_of_Horus_bw.png",
+                    "http://www.thenorthpacific.org/images/tsp.png"];
+    return snowflakes[Math.floor(Math.random()*snowflakes.length)];
+  };
+  var no=50;
+  start_snowflakes();
+}
+// Configure whether snow should disappear after x seconds (0=never):
+var hidesnowtime = 0;
+// Configure how much snow should drop down before fading ("windowheight" or "pageheight")
+var snowdistance = "1";
+
+///////////Stop Config//////////////////////////////////
+
+var ie4up = (document.all) ? 1 : 0;
+var ns6up = (document.getElementById&&!document.all) ? 1 : 0;
+
+function iecompattest(){
+  return (document.compatMode && document.compatMode!="BackCompat")? document.documentElement : document.body
+}
+
+var dx, xp, yp; // coordinate and position variables
+var am, stx, sty; // amplitude and step variables
+var i, doc_width = 800, doc_height = 600;
+
+if (ns6up) {
+  doc_width = self.innerWidth;
+  doc_height = self.innerHeight;
+} else if (ie4up) {
+  doc_width = iecompattest().clientWidth;
+  doc_height = iecompattest().clientHeight;
+}
+
+dx = new Array();
+xp = new Array();
+yp = new Array();
+am = new Array();
+stx = new Array();
+sty = new Array();
+
+for (i = 0; i < no; ++ i) {
+  dx[i] = 0; // set coordinate variables
+  xp[i] = Math.random()*(doc_width-50); // set position variables
+  yp[i] = Math.random()*doc_height;
+  am[i] = Math.random()*20; // set amplitude variables
+  stx[i] = 0.02 + Math.random()/10; // set step variables
+  sty[i] = 0.7 + Math.random(); // set step variables
+  if (ie4up||ns6up) {
+    if (i == 0) {
+      document.write("<div id=\"dot"+ i +"\" style=\"POSITION: absolute; Z-INDEX: "+ i +"; VISIBILITY: visible; TOP: 15px; LEFT: 15px;\"><a href=\"http://dynamicdrive.com\"><img src='"+snowsrc()+"' border=\"0\"><\/a><\/div>");
+    } else {
+      document.write("<div id=\"dot"+ i +"\" style=\"POSITION: absolute; Z-INDEX: "+ i +"; VISIBILITY: visible; TOP: 15px; LEFT: 15px;\"><img src='"+snowsrc()+"' border=\"0\"><\/div>");
+    }
+  }
+}
+
+function snowIE_NS6() { // IE and NS6 main animation function
+  doc_width = ns6up?window.innerWidth-10 : iecompattest().clientWidth-10;
+  doc_height=(window.innerHeight && snowdistance=="windowheight")? window.innerHeight : (ie4up && snowdistance=="windowheight")? iecompattest().clientHeight : (ie4up && !window.opera && snowdistance=="pageheight")? iecompattest().scrollHeight : iecompattest().offsetHeight;
+  for (i = 0; i < no; ++ i) { // iterate for every dot
+    yp[i] += sty[i];
+    if (yp[i] > doc_height-50) {
+      xp[i] = Math.random()*(doc_width-am[i]-30);
+      yp[i] = 0;
+      stx[i] = 0.02 + Math.random()/10;
+      sty[i] = 0.7 + Math.random();
+    }
+    dx[i] += stx[i];
+    document.getElementById("dot"+i).style.top=yp[i]+"px";
+    document.getElementById("dot"+i).style.left=xp[i] + am[i]*Math.sin(dx[i])+"px";
+  }
+  snowtimer=setTimeout(snowIE_NS6, 10);
+}
+
+function hidesnow(){
+  if (window.snowtimer) clearTimeout(snowtimer)
+  for (i=0; i<no; i++) 
+    document.getElementById("dot"+i).style.visibility="hidden";
+}
+
+
+if (ie4up||ns6up){
+  snowIE_NS6();
+if (hidesnowtime>0)
+  setTimeout(hidesnow, hidesnowtime*1000);
+}
+
+</script>
+<!-- HEADER -->
+<!-- SUBMENU -->
+<div id="main_content1">
+<div id="header">
+<div id="header_l"><!-- top left corner --></div>
+<div id="header_r"><!-- top right corner --></div></div>
+<div id="side_l"><div id="side_r">
+<div id="wrap"><!-- begin wrap -->
+
+<!-- content starts -->
+<div id="nav_wrap"><!-- NAV --></div>
+<div id="newsbox" class="category">
+	<table class="cat_head" id="news_header">
+		<tr><td>
+			<h2 class="special">
+				<span class="collapse" onclick="toggle_news();">
+					<img src="http://www.thenorthpacific.org/images/forum/Aquatica%20Gfx/Misc/collapse.png" alt="-" />
+				</span>
+				News Box
+			</h2>
+		</td></tr>
+	</table>
+	<table id="news" class="forums" cellspacing="0" style="display:table;"></table>
+</div>
+<div id="tnpwire"><span class="loading"></span></div>
+<script type="text/javascript">
+	//<[!CDATA[
+	// set newsbox url depending on whether this is the testforum or not
+	if( window.location.hostname == "forum.thenorthpacific.org"	) {
+		var news_url="/single/?p=8049728&t=6917307 .c_post";
+	} else {
+		var news_url="/single/?p=8028243&t=7692680 .c_post";
+	}
+	// derive forum clock time (represented in local time)
+	$("#foot_datetime").ready( function() {
+		var forum_time_s=$("#foot_datetime a").text();
+		var a = forum_time_s.split(' ');
+		a.shift();
+		var y = new Date().getFullYear();
+		forum_time = new Date([a[2],a[3],y,a[0],a[1]].join(' ')).getTime();
+		if( forum_time - new Date() > 86400000 ) {
+			forum_time = new Date([a[2],a[3],y-1,a[0],a[1]].join(' ')).getTime();
+		} else if( forum_time - new Date() < -86400000 ) {
+			forum_time = new Date([a[2],a[3],y+1,a[0],a[1]].join(' ')).getTime();
+		}
+		$("#news").ready( function() {
+			$("#news").load(news_url, function(){
+				var edited = $("#news .editby").text().split(', ');
+				var edit_ts;
+				if( edited === undefined ) {
+					edit_ts = 0
+				} else {
+					edited.shift();
+					var edit_s=edited.join(' ');
+					if ( edit_s == 'One minute ago' ) {
+						edit_ts = forum_time-60000;
+					} else if ( edit_s.match(/^([0-9]+) minutes ago\.$/) ) {
+						edit_ts = forum_time - edit_s.match(/^([0-9]+) minutes ago\.$/)[1]*60000;
+					} else if ( edit_s.match(/^Today (.*)\.$/ ) ) {
+						edit_ts = new Date(new Date(forum_time).toDateString()+' '+edit_s.match(/^Today (.*)\.$/)[1]).getTime();
+					} else if ( edit_s.match(/^Yesterday (.*)\.$/ ) ) {
+						edit_ts = new Date(new Date(forum_time-86400000).toDateString()+' '+edit_s.match(/^Yesterday (.*)\.$/)[1]).getTime();
+					} else if ( edit_s.match(/^([A-Z][a-z][a-z] \d\d \d\d\d\d \d\d:\d\d [AP]M)\.$/) ) {
+						edit_ts = new Date(edit_s.match(/^([A-Z][a-z][a-z] \d\d \d\d\d\d \d\d:\d\d [AP]M)\.$/)[1]).getTime();
+					} else {
+						// alert('Could not parse edit by: '+edit_s);
+						edit_ts=0;
+					}
+					news_edit_ts=edit_ts;
+				}
+				try {
+					if( 'localStorage' in window && window['localStorage'] !== null ) {
+						if( window.localStorage.news_hidden > edit_ts ) {
+							$("#news").hide();
+							$("#newsbox span.collapse").removeClass('collapse').addClass('uncollapse').children('img').attr({alt:'+',src:'http://www.thenorthpacific.org/images/forum/Aquatica%20Gfx/Misc/expand.png'});
+						} else {
+							window.localStorage.removeItem('news_hidden');
+						}
+					}
+				} catch (e) {
+					alert("no localstorage D: -- Please contact Eluvatar to get him to "
+			+ "code something for you and your old, old browser");
+				}
+			});
+		});
+	});
+	function toggle_news() {
+		if( window.localStorage.news_hidden > news_edit_ts ) {
+			window.localStorage.removeItem('news_hidden');
+		} else {
+			window.localStorage.news_hidden=forum_time;
+		}
+	}
+	//]]>
+</script>
+<script type="text/javascript">
+//<![CDATA[
+	// Ator put this here
+	tumblrapp = (function () {
+		function tumblr(resp) {
+			var posts = resp.posts;
+			for (var i=0; i<posts.length; i++) {
+				var p = posts[i];
+				title = p['regular-title'] || p['link-text'] || null;
+				if (title)
+					document.getElementById("tnpwire").innerHTML="<center>Latest from the <a href='http://tnp-wire.tumblr.com/' target='_blank'>TNP Wire</a>: <a	target='_blank' href='"+p['url']+"'>"+title+"</a></center>";
+			}
+
+		}
+return {tumblr: tumblr};
+	})();
+//]]>
+</script>
+
+
+<!-- BOARD -->
+
+
+<!-- content ends -->
+
+</div></div>
+
+<div id="footer">
+<div id="footer_l"><!-- bottom left corner --></div>
+<div id="footer_r"><!-- bottom right corner --></div>
+</div></div>
+
+
+<script type="text/javascript" src="http://z3.ifrm.com/2/101/0/p53788/h2.js"></script>
+
+<div style="margin:auto;text-align:center;font-size:80%">SC Winter created by <b>Tue</b> of <a href="http://s-c.sytes.net"><b>Self Concept</b> and <a href="http://zbthemezone.com"><b>ZBTZ</b></a></div>

@@ -1,0 +1,133 @@
+<script type="text/javascript" src="http://z5.ifrm.com/9057/121/0/f5157343/highcharts.js"></script>
+<h1><a id="zoomout">SC Endorsement Records</a></h1>
+<div id="received-chart-container"></div>
+<div id="given-chart-container"></div>
+<div id="influence-chart-container"></div>
+<script type="text/javascript">
+// code added 2013-01-08 to allow URLs linking to particular settings by Elu
+$("#zoomout").attr('href',location.protocol+'//'+location.host+location.pathname);
+if( window.location.hash ) {
+  var visibility_set = {};
+  $.each(window.location.hash.slice(1).split('+'),function(i,e){
+    visibility_set[e.toLowerCase().replace(/ /g,'_').replace(/%20/g,'_')]=true;
+  })
+  var visibility_fn=function(ranks, Name){
+    return Name.toLowerCase().replace(/ /g,'_') in visibility_set;
+  };
+} else {
+  var visibility_fn=function(ranks,Name){
+    return ranks[Name] < 10;
+  };
+}
+if( window.location.search ) {
+  var range = window.location.search.slice(1).split(':');
+  if( range.length != 2 ) {
+    alert("Bad time range specified: "+window.location.search.slice(1)); 
+  }
+  var from=new Date(range[0]).getTime();
+  var to=new Date(range[1]).getTime();
+  var q={from:from/1000,to:to/1000};
+} else {
+  var from=null;
+  var to=null;
+  var q='';
+}
+// main code
+var charts={};
+function generateChart( data, ykey, topkey, container, title ) {
+  var series=[];
+  var simple_series={};
+  var times=[];
+  $.each( data, function(ts,top_25) {
+    var t=ts*1000;
+    var col={};
+    var arr=top_25.endorsers.concat(top_25.endorsees,top_25.influential,top_25.other);
+    $.each( arr, function(i,info){
+      if( info && ! (info.Name in col) && ykey in info ) {
+        col[info.Name]=info[ykey];
+      }
+    });
+    $.each( col, function(Name,val) {
+      if( Name in simple_series ) {
+        simple_series[Name].push([t,parseInt(val)]);
+      } else {
+        simple_series[Name]=[[t,parseInt(val)]];
+      }
+    });
+    $.each( simple_series, function(Name,points){
+      if( ! (Name in col) ) {
+        simple_series[Name].push([t,null]);
+      } 
+    });
+    times.push(ts);
+  });
+  var lastdatum=data[Math.max.apply(null,times)];
+  var ranks={};
+  $.each( lastdatum[topkey], function(i,info){ ranks[info.Name]=i; });
+  var toqueue=[];
+  $.each( simple_series, function(Name, sdata) {
+    toqueue.push(Name);
+  });
+  $.each( toqueue.sort(), function(i,Name){
+    series.push({ name: Name, data: simple_series[Name], visible: visibility_fn(ranks,Name) });
+  });
+  var arg={
+    chart: {
+      renderTo: container,
+      backgroundColor: 'rgb(230,230,230)',
+      defaultSeriesType: 'spline',
+      zoomType: 'x'
+    },
+    title: {
+      text: title
+    },
+    credits: { enabled: false },
+    xAxis: {
+      title: { text: 'Time' },
+      type: 'datetime',
+      min: from,
+      max: to
+    },
+    yAxis: {
+      title: { text: title }
+    },
+    plotOptions: {
+      spline: {
+        lineWidth: 1,
+        states: { hover: { lineWidth:1 } },
+        marker: {
+          enabled: false,
+          states: { hover: { enabled: true, symbol: 'circle', radius: 3, lineWidth: 1 } }
+        },
+        visible: false
+      },
+      navigation: { menuItemSize: { fontSize: '20px' } }
+    },
+    series: series
+  };
+  charts[container] = new Highcharts.Chart(arg);
+  var range=charts[container].yAxis[0].getExtremes();
+  if( range.min < 0 ) { charts[container].yAxis[0].setExtremes(0,range.max); }
+}
+$(document).ready(function(){
+  $.ajax({
+    url:"http://www.thenorthpacific.org/log/logs.php",
+    dataType:'jsonp',
+    data:q,
+    jsonp: 'jsonp',
+    jsonpCallback: 'generateCharts',
+    success:function( data ) {
+      generateChart( data, 'endos', 'endorsees', 'received-chart-container', 'Endorsements Received' );
+      generateChart( data, 'endos_given', 'endorsers', 'given-chart-container', 'Endorsements Given' );
+      var inf_generated=false;
+      $.each(data,function(ts,top_25){
+        if( inf_generated ) return;
+        if( 'influential' in data[ts] ) {
+          generateChart( data, 'influence_score', 'influential', 'influence-chart-container', 'Soft Power Disbursement Rating' );
+          inf_generated=true;
+        }
+      });
+    }
+  });
+});
+</script>
