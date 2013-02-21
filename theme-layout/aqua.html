@@ -1,0 +1,125 @@
+<!-- TOPMENU --><!-- HEADER --><!-- SUBMENU -->
+<div id="wrap"><!-- begin wrap -->
+<div id="newsbox" class="category">
+	<table class="cat_head" id="news_header">
+		<tr><td>
+			<h2 class="special">
+				<span class="collapse" onclick="toggle_news();">
+					<img src='http://www.thenorthpacific.org/images/forum/Aquatica%20Gfx/Misc/collapse.png' alt='-' />
+				</span>
+				News Box
+			</h2>
+		</td></tr>
+	</table>
+	<table id="news" class="forums" cellspacing="0" style="display:table;"></table>
+</div>
+<div id="tnpwire"><span class="loading"></span></div>
+<script type="text/javascript">
+	//<[!CDATA[
+	// set newsbox url depending on whether this is the testforum or not
+	if( window.location.hostname == "forum.thenorthpacific.org"	) {
+		var news_url="/single/?p=8049728&t=6917307 .c_post";
+	} else {
+		var news_url="/single/?p=8028243&t=7692680 .c_post";
+	}
+	// derive forum clock time (represented in local time)
+	$("#foot_datetime").ready( function() {
+		var forum_time_s=$("#foot_datetime a").text();
+		var a = forum_time_s.split(' ');
+		a.shift();
+		var y = new Date().getFullYear();
+		forum_time = new Date([a[2],a[3],y,a[0],a[1]].join(' ')).getTime();
+		if( forum_time - new Date() > 86400000 ) {
+			forum_time = new Date([a[2],a[3],y-1,a[0],a[1]].join(' ')).getTime();
+		} else if( forum_time - new Date() < -86400000 ) {
+			forum_time = new Date([a[2],a[3],y+1,a[0],a[1]].join(' ')).getTime();
+		}
+		$("#news").ready( function() {
+			$("#news").load(news_url, function(){
+				var edited = $("#news .editby").text().split(', ');
+				var edit_ts;
+				if( edited === undefined ) {
+					edit_ts = 0
+				} else {
+					edited.shift();
+					var edit_s=edited.join(' ');
+					if ( edit_s == 'One minute ago' ) {
+						edit_ts = forum_time-60000;
+					} else if ( edit_s.match(/^([0-9]+) minutes ago\.$/) ) {
+						edit_ts = forum_time - edit_s.match(/^([0-9]+) minutes ago\.$/)[1]*60000;
+					} else if ( edit_s.match(/^Today (.*)\.$/ ) ) {
+						edit_ts = new Date(new Date(forum_time).toDateString()+' '+edit_s.match(/^Today (.*)\.$/)[1]).getTime();
+					} else if ( edit_s.match(/^Yesterday (.*)\.$/ ) ) {
+						edit_ts = new Date(new Date(forum_time-86400000).toDateString()+' '+edit_s.match(/^Yesterday (.*)\.$/)[1]).getTime();
+					} else if ( edit_s.match(/^([A-Z][a-z][a-z] \d\d \d\d\d\d \d\d:\d\d [AP]M)\.$/) ) {
+						edit_ts = new Date(edit_s.match(/^([A-Z][a-z][a-z] \d\d \d\d\d\d \d\d:\d\d [AP]M)\.$/)[1]).getTime();
+					} else {
+						// alert('Could not parse edit by: '+edit_s);
+						edit_ts=0;
+					}
+					news_edit_ts=edit_ts;
+				}
+				try {
+					if( 'localStorage' in window && window['localStorage'] !== null ) {
+						if( window.localStorage.news_hidden > edit_ts ) {
+							$("#news").hide();
+							$("#newsbox span.collapse").removeClass('collapse').addClass('uncollapse').children('img').attr({alt:'+',src:'http://www.thenorthpacific.org/images/forum/Aquatica%20Gfx/Misc/expand.png'});
+						} else {
+							window.localStorage.removeItem('news_hidden');
+						}
+					}
+				} catch (e) {
+					alert("no localstorage D: -- Please contact Eluvatar to get him to "
+			+ "code something for you and your old, old browser");
+				}
+			});
+		});
+	});
+	function toggle_news() {
+		if( window.localStorage.news_hidden > news_edit_ts ) {
+			window.localStorage.removeItem('news_hidden');
+		} else {
+			window.localStorage.news_hidden=forum_time;
+		}
+	}
+	//]]>
+</script>
+<script type="text/javascript">
+//<![CDATA[
+	// Ator put this here
+	tumblrapp = (function () {
+		function tumblr(resp) {
+			var posts = resp.posts;
+			for (var i=0; i<posts.length; i++) {
+				var p = posts[i];
+				title = p['regular-title'] || p['link-text'] || null;
+				if (title)
+					document.getElementById("tnpwire").innerHTML="<center>Latest from the <a href='http://tnp-wire.tumblr.com/' target='_blank'>TNP Wire</a>: <a	target='_blank' href='"+p['url']+"'>"+title+"</a></center>";
+			}
+
+		}
+return {tumblr: tumblr};
+	})();
+//]]>
+</script>
+<script src="http://tnp-wire.tumblr.com/api/read/json?callback=tumblrapp.tumblr&amp;num=1" type="text/javascript"></script>
+<!-- NAV --><!-- BOARD -->
+</div><!-- end wrap -->
+<div id="grouplabels" class="roundCornersParent"><p>Group Labels</p><div><span class="admin">Administrator</span> - <span class="mod">Global Moderators</span> - <span class="cabinet">Cabinet</span> - <span class="delegate">WA Delegate</span> - <span class="vicedel">Vice Delegate</span><br/><span class="court">Court Justices</span> - <span class="assembly">Regional Assembly</span> - <span class="council">Security Council</span> - <span class="diplomat">Diplomat</span> - <span
+class="citizen">TNP Citizen</span> - <span
+class="envoy">Foreign Envoy</span></div></div>
+<div id="mycopy"><center>Theme by tiptopolive of <a href="http://zbthemezone.net">Zetaboards Theme Zone</a></div></div>
+
+<script type="text/javascript">
+//<![CDATA[
+$("ul.cat-topicpages").corner("4px");
+$("#ucp_gallery a").corner("8px");
+$("#wrap").corner("24px");
+$("#nav").corner("16px");
+$("#blockquote div").corner("6px");
+$("#grouplabels").corner("24px"); // Added by Eluvatar
+
+//]]>
+</script>
+
+<script type="text/javascript" src="http://z3.ifrm.com/197/177/0/p86186/th2.js"></script>
