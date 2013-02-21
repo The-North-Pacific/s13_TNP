@@ -3,7 +3,7 @@
 // @namespace  http://forum.thenorthpacific.org/
 // @version    0.1
 // @description  embassy creation script
-// @match      http://1811521.a11.zetaboards.com/admin/?menu=forum&c=1
+// @match      http://2142228.13.zetaboards.com/admin/?menu=forum&c=1
 // @require        http://code.jquery.com/jquery-1.6.1.min.js
 // @grant          GM_getValue
 // @grant          GM_setValue
@@ -19,7 +19,7 @@ var regions=[
   {
     name: "Osiris",
     style: "the Kemetic Republic of Osiris",
-    offsite: "http://s13.zetaboards.com/Osiris_NS/index/"
+    offsite: "http://s13.zetaboards.com/Osiris_NS/"
   },
   {
     name: "the Pacific",
@@ -118,15 +118,15 @@ var regions=[
   }
 ];
 
-var pid=3227844;
-var fullg=[];
-var postg=[8849,8850,8852,8853,8854,8855,1558941];
-var viewg=[8848];
+var pid=39650;
+var fullg=[12376,12378,12381,12388];
+var postg=[12375];
+var viewg=[12374,12377];
 
 for( i in regions ) {
 	var o=regions[i];
     console.log("i="+i+", o="+JSON.stringify(o));
-    if( GM_getValue(o.name) != 'done' ){
+    if( GM_getValue(o.name) == undefined || GM_getValue(o.name) != 'really_done' ){
         console.log(o.name+"!");
 		$('form[name=forum_form]').attr('target','forum_'+i);
         var reg=o.name;
@@ -158,7 +158,7 @@ for( i in regions ) {
         $('input[name="forum_title"]').val(reg);
         $('textarea[name="forum_desc"]').text(desc);
         $('form[name=forum_form]').submit();
-		GM_setValue(o.name,'done');
+		GM_setValue(o.name,'really_done');
         break;
 	}
 }
