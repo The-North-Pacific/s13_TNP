@@ -1,0 +1,124 @@
+<script type="text/javascript">
+if( window.location.hostname == "forum.thenorthpacific.org" ) {
+  docs = { cur: null,
+	constitution: { id: "#constitution", link: "#link_const", fetched: false, url: "http://forum.thenorthpacific.org/topic/6951242/ .c_post", toc:{ id: "#toc_const", selector: "#constitution blockquote strong"} },
+	BoR: { id: "#BoR", link: "#link_bor", fetched: false, url: "http://forum.thenorthpacific.org/topic/633856/1/ .c_post", toc: null },
+	laws: { id: "#laws", link: "#link_laws", fetched: false, url: "http://forum.thenorthpacific.org/topic/6924120/1/ .c_post", toc: {id: "#toc_laws", selector: "#laws>td big>strong"} },
+	cops: { id: "#cops", link: "#link_cops", fetched: false, url: "http://forum.thenorthpacific.org/topic/6951164/ .c_post", toc: null },
+	osi: { id: "#osi", link: "#link_osi", fetched: false, url: "http://forum.thenorthpacific.org/topic/6924128/ .c_post", toc: null },
+	idu: { id: "#idu", link: "#link_idu", fetched: false, url: "http://forum.thenorthpacific.org/topic/6924127/ .c_post", toc: null },
+	tai: { id: "#tai", link: "#link_tai", fetched: false, url: "http://forum.thenorthpacific.org/topic/6924124/ .c_post", toc: null },
+	tsp: { id: "#tsp", link: "#link_tsp", fetched: false, url: "http://forum.thenorthpacific.org/topic/6924125/ .c_post", toc: null },
+	sg: { id: "#sg", link: "#link_sg", fetched: false, url: "http://forum.thenorthpacific.org/topic/6924123/ .c_post", toc: null },
+	eq: { id: "#eq", link: "#link_eq", fetched: false, url: "http://forum.thenorthpacific.org/topic/6966106/ .c_post", toc: null },
+	ra: { id: ".ra", link: "#link_ra", fetched: false, url: "http://forum.thenorthpacific.org/topic/635106/1/ .c_post", wrap:"<tr>", toc: { id: "#toc_ra", selector: ".ra .c_post>strong" } },
+	cr: { id: "#cr", link: "#link_cr", fetched: false, url: "http://forum.thenorthpacific.org/single/?p=8077598&t=6738296 .c_post", toc: {id: "#toc_cr", selector: "#cr>td strong>u"} },
+	idx: { id: ".idx", link: "#link_idx", fetched:false, url: "http://forum.thenorthpacific.org/topic/6988495/1/ .c_post", wrap:"<tr>", toc: { id: "#toc_idx", selector: ".idx td>span:first-child+span>em"} },
+        sc: { id: "#sc", link: "#link_sc", fetched:false, url: "http://forum.thenorthpacific.org/single/?p=8041194&t=6869154 .c_post", toc: { id: "#toc_sc", selector: "#sc>td.c_post>strong" } }
+  }
+} else {
+  docs = { cur: null,
+	constitution: { id: "#constitution", link: "#link_const", fetched: false, url: "http://testforum.thenorthpacific.org/topic/7846374/ .c_post", toc:{ id: "#toc_const", selector: "#constitution>td>*+strong"} },
+	BoR: { id: "#BoR", link: "#link_bor", fetched: false, url: "http://testforum.thenorthpacific.org/topic/8065620/1/ .c_post", toc: null },
+	laws: { id: "#laws", link: "#link_laws", fetched: false, url: "http://testforum.thenorthpacific.org/topic/8065681/1/ .c_post", toc: {id: "#toc_laws", selector: "#laws>td big>strong"} },
+	cops: { id: "#cops", link: "#link_cops", fetched: false, url: "http://forum.thenorthpacific.org/topic/6951164/ .c_post", toc: null },
+	osi: { id: "#osi", link: "#link_osi", fetched: false, url: "http://forum.thenorthpacific.org/topic/6924128/ .c_post", toc: null },
+	idu: { id: "#idu", link: "#link_idu", fetched: false, url: "http://forum.thenorthpacific.org/topic/6924127/ .c_post", toc: null },
+	tai: { id: "#tai", link: "#link_tai", fetched: false, url: "http://forum.thenorthpacific.org/topic/6924124/ .c_post", toc: null },
+	tsp: { id: "#tsp", link: "#link_tsp", fetched: false, url: "http://forum.thenorthpacific.org/topic/6924125/ .c_post", toc: null },
+	sg: { id: "#sg", link: "#link_sg", fetched: false, url: "http://forum.thenorthpacific.org/topic/6924123/ .c_post", toc: null },
+	eq: { id: "#eq", link: "#link_eq", fetched: false, url: "http://forum.thenorthpacific.org/topic/6966106/ .c_post", toc: null },
+	ra: { id: ".ra", link: "#link_ra", fetched: false, url: "http://forum.thenorthpacific.org/topic/635106/1/ .c_post", toc: { id: "#toc_ra", selector: ".ra strong" } },
+	iho: { id: "#iho", link: "#link_iho", fetched: false, url: "http://forum.thenorthpacific.org/single/?p=8015996&t=6738296 .c_post", toc: null },
+        cr: { id: "#cr", link: "#link_cr", fetched: false, url: "http://forum.thenorthpacific.org/single/?p=8076579&t=6738296 .c_post", toc: {id: "#toc_cr", selector: "#cr>td strong>u"} },
+        idx: { id: ".idx", link: "#link_idx", fetched:false, url: "http://testforum.thenorthpacific.org/topic/8255048/1/ .c_post", wrap:"<tr>", toc: { id: "#toc_idx", selector: ".idx blockquote dt"} },
+        sc: { id: "#sc", link: "#link_sc", fetched:false, url: "http://forum.thenorthpacific.org/single/?p=8041194&t=6869154 .c_post", toc: { id: "#toc_sc", selector: "#sc>td.c_post>strong" } }
+  }
+}
+</script>
+<script type="text/javascript" src="http://z5.ifrm.com/9057/121/0/f5151374/docs.js">//<[!CDATA[ script by Eluvatar]]></script>
+<script type="text/javascript">
+  $("#documents").ready( function(){ 
+    for (doc in docs) {
+      if( doc != "cur") { $(docs[doc].link).attr("href",docs[doc].url); }
+    }
+    if( window.location.hash ) {
+      var a=window.location.hash.substring(2).split('_');
+      var my_doc = docs[a[0]];
+      var fn=function(){ 
+        if( $(my_doc.id+' a.article').size() > a[1] ) {
+          document.getElementsByName(window.location.hash.substring(1))[0].scrollIntoView(true);
+        } else {
+          setTimeout(fn,20);
+        }
+      };
+      $.when( $(my_doc.link).trigger('click') ).done(fn);
+    }
+    $("#newsbox").replaceWith( $("#documents")[0] );
+  } );
+</script>
+<div  id="documents" class="category">
+<div style="margin-left: -1px;" class="h2wrap"><div class="h2left"><div class="h2right"><div class="h2center">
+                <span class="collapse"><img alt="-" src="http://www.thenorthpacific.org/images/forum/Aquatica%20Gfx/Misc/collapse.png" onclick="document_hide();"></span> Legal Documents</div></div></div></div>
+<table class="forums" cellspacing="0">
+  <thead>
+    <tr class="doclist"><td>
+      <strong>Supreme Law:</strong> 
+        <a id="link_const" onclick="return document_clicked(docs.constitution);">Constitution</a> - 
+        <a id="link_bor" onclick="return document_clicked(docs.BoR);">Bill of Rights</a> - 
+        <a id="link_laws" onclick="return document_clicked(docs.laws);">Legal Code</a> -
+      <strong>Court:</strong>
+        <a id="link_cr" onclick="return document_clicked(docs.cr);">Rules</a> -
+        <a id="link_idx" onclick="return document_clicked(docs.idx);">Rulings</a> -
+      <strong>RA:</strong> <a id="link_ra" onclick="return document_clicked(docs.ra);">Procedure</a> -
+      <strong>SC:</strong> <a id="link_sc" onclick="return document_clicked(docs.sc);">Procedure</a>
+    </td></tr>
+    <tr class="doclist"><td>
+      <strong>Treaties:</strong> 
+        <a id="link_cops" onclick="return document_clicked(docs.cops);">Convention on Off-site Property Security</a> - Alliances:
+        <a id="link_sg" onclick="return document_clicked(docs.sg);">Stargate</a> - 
+        <a id="link_tsp" onclick="return document_clicked(docs.tsp);">The South Pacific</a> - 
+        <a id="link_tai" onclick="return document_clicked(docs.tai);">Taijitu</a> - 
+        <a id="link_idu" onclick="return document_clicked(docs.idu);">International Democratic Union</a> - 
+        <a id="link_osi" onclick="return document_clicked(docs.osi);">Osiris</a> - 
+        <a id="link_eq" onclick="return document_clicked(docs.eq);">Equilism</a> 
+    </td></tr>
+    <tr class="doclist"><td><big><img src="http://i.imgur.com/envIX.gif" style="vertical-align:middle;padding-right:2px;"/><a href="http://forum.thenorthpacific.org/forum/3024532/" style="text-decoration:underline;color:#00a;">Legal Records Area</a></big></td></tr>
+    <tr><td><table><thead>
+      <tr id="toc_const" style="display:none"><td><ol></ol></td></tr>
+      <tr id="toc_bor" style="display:none"><td><ol></ol></td></tr>
+      <tr id="toc_laws" style="display:none"><td><ol></ol></td></tr>
+      <tr id="toc_cops" style="display:none"><td><ol></ol></td></tr>
+      <tr id="toc_osi" style="display:none"><td><ol></ol></td></tr>
+      <tr id="toc_idu" style="display:none"><td><ol></ol></td></tr>
+      <tr id="toc_tai" style="display:none"><td><ol></ol></td></tr>
+      <tr id="toc_tsp" style="display:none"><td><ol></ol></td></tr>
+      <tr id="toc_sg" style="display:none"><td><ol></ol></td></tr>
+      <tr id="toc_eq" style="display:none"><td><ol></ol></td></tr>
+      <tr id="toc_ra" style="display:none"><td><ol></ol></td></tr>
+      <tr id="toc_cr" style="display:none"><td><ol></ol></td></tr>
+      <tr id="toc_idx" style="display:none"><td><ol></ol></td></tr>
+      <tr id="toc_sc" style="display:none"><td><ol></ol></td></tr>
+    </thead></table></td></tr>
+  </thead>
+  <tbody>
+    <tr id="constitution" style="display:none"><td></td></tr>
+    <tr id="BoR" style="display:none"><td></td></tr>
+    <tr id="laws" style="display:none"><td></td></tr>
+    <tr id="cops" style="display:none"><td></td></tr>
+    <tr id="osi" style="display:none"><td></td></tr>
+    <tr id="idu" style="display:none"><td></td></tr>
+    <tr id="tai" style="display:none"><td></td></tr>
+    <tr id="tsp" style="display:none"><td></td></tr>
+    <tr id="sg" style="display:none"><td></td></tr>
+    <tr id="eq" style="display:none"><td></td></tr>
+    <tr id="abst" style="display:none"><td></td></tr>
+    <tr id="spt" style="display:none"><td></td></tr>
+    <tr id="rnr" style="display:none"><td></td></tr>
+    <tr id="7d" style="display:none"><td></td></tr>
+    <tr id="cr" style="display:none"><td></td></tr>
+    <tr id="sc" style="display:none"><td></td></tr>
+  </tbody>
+  <tfoot class="idx" style="display:none"></tfoot>
+  <tfoot class="ra" style="display:none"></tfoot>
+</table></div>
