@@ -1,0 +1,59 @@
+<script type="text/javascript">
+
+user_data = [{ id: 197281, title:'<span style="font-weight:bold;color:pink;">Evil Bunny Tyrant</span>', rebel: 0.3}, { id: 197289, rebel: 1}, {id: 197685, rebel: 0.2, title: '<span class="delegate">Boring Delegate</span>'}];
+
+function add_user_info( user ) { // Added by Eluvatar <3
+  var c_user_tds = $(".c_username a[href=\"http://forum.thenorthpacific.org/profile/"+user.id+"/\"]").parent().parent().next().children("td.c_user");
+  if( user.title != null ) {
+    c_user_tds.children("div.usertitle").prepend(user.title);
+  }
+  if( user.rebel != null ) {
+    c_user_tds.children(".user_info").append("<dt>Rebel count:</dt><dd>"+user.rebel+"</dd>");
+  }
+}
+
+$.each( user_data , function(index,value){  add_user_info(value); } );
+
+avatars = [{id: 197302, url: 'http://imageshack.us/a/img119/2513/comic038copy4va.jpg'}];
+
+$.each( avatars, function(index,av) {
+  $("img[src*=\"/avatar-"+av.id+".\"]").attr('src',av.url);
+  var c_user_tds = $(".c_username a[href=\"http://forum.thenorthpacific.org/profile/"+av.id+"/\"]").parent().parent().next().children("td.c_user");
+  var tmp = c_user_tds.children().first();
+  if( tmp.hasClass('usertitle') > 0 ) {
+    tmp.before($('<a>',{
+      title: 'Click to edit profile',
+      href: 'http://forum.thenorthpacific.org/home/?c=6&mod='+av.id,
+      append: $('<div>',{
+        style:"margin:auto;max-width: 130px; max-height: 130px;",
+        append:$('<img>',{
+          class: 'avatar',
+          border: '0',
+          style: 'max-width: 130px; max-height: 130px;',
+          alt: 'Member Avatar',
+          src: av.url
+        })
+      })
+    }));
+  }
+});
+// NS Nation links :)
+function link_to_nation( index, html ) {
+  if( $(this) && $(this).text() && $(this).text().match("^[A-Za-z0-9 \-_]+$") ) {
+    return "<dd><a href=\"http://www.nationstates.net/nation="+$(this).text()+"\">"+$(this).text()+"</a>";
+  } else {
+    return $(this).clone();
+  }
+}
+function close_link_to_nation( index, html ) {
+}
+
+
+$(document).ready( function() {
+  if( $("dt:contains(Nation) + dd").length ) { $(".user_profile").children("dt:contains(Nation) + dd").replaceWith(link_to_nation) }
+});
+</script>
+
+<script type='text/javascript' src='http://z1.ifrm.com/0/2/0/p401849/bbtags31_xanik.js'></script><script>ubb_tag("Nation","nation","<a href='http://www.nationstates.net/nation=<% INNER %>'><% INNER %></a>",0,"Links to a nation on NationStates"); ubb_tag("Region","region","<a href='http://www.nationstates.net/region=<% INNER %>'><% INNER %></a>",0,"Links to a region on NationStates");</script>
+
+<script type="text/javascript" src="http://www.thenorthpacific.org/advancedmultipm.js"></script>
