@@ -78,6 +78,9 @@
 							return {title:v};
 						} else {
 							return $.map(datum,function(w,k){
+								if( w == 'Vacant' ) {
+									return {title:v,subtitle:k};
+								}
 								w.title=v;
 								w.subtitle=k;
 								return w;
