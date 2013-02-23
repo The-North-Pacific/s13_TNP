@@ -25,10 +25,14 @@ if( window.location.hash ) {
   };
 }
 function time_link(id,from,to) {
+  function zeropad(n){
+    var s="00"+n;
+    return s.slice(s.length-2);
+  }
   var pref='http://'+window.location.host+window.location.pathname;
   var datefn=function(ts){
     t=new Date(ts);
-    return [t.getFullYear(),t.getMonth()+1,t.getDate()].join("-");
+    return [t.getFullYear(),zeropad(t.getMonth()+1),zeropad(t.getDate())].join("-");
   };
   var search=datefn(from)+":"+datefn(to);
   var url=pref+"?"+search+window.location.hash;
