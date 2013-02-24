@@ -1,0 +1,55 @@
+ <script type="text/javascript">
+ var RecaptchaOptions = {
+    theme : 'clean'
+ };
+ $(document).ready(function(){
+  $("#member_id").val($('#top_info>strong>a').attr('href').split("/")[4]);
+  $("#member_name").val($('#top_info>strong>a').text());
+  if( window.location.hash && window.location.hash[1] == '!' ) {
+      var msg = window.location.hash.slice(2);
+      var notice = $('<dl class="notice info">').append(
+        '<dt>Notice</dt>',$('<dd>').text(msg)
+        );
+      $("#main").prepend(notice);
+  }
+ });
+ </script>
+<form method="POST" action="http://www.thenorthpacific.org/github/bug_report.cgi">
+  <fieldset>
+    <legend>Bug Report</legend>
+    <input type="hidden" id="member_id" name="member_id" />
+    <input type="hidden" id="member_name"  name="member_name" />
+    <p>
+      <label for="bug_title">Bug Title:</label>
+      <input type="text" id="bug_title" name="bug_title" maxlength="64" 
+        placeholder="What is broken" />
+    </p>
+    <p>
+      <label for="bug_url">Broken URL:</label>
+      <input type="text" id="bug_url" name="bug_url" maxlength="128" size="40"
+        placeholder="e.g. http://forum.thenorthpacific.org/pages/bug-report/" />
+    </p>
+    <p>
+      <label for="bug_steps">Steps to Reproduce:</label>
+      <textarea id="bug_steps" name="bug_steps" cols="80" rows="12" 
+        tabindex="1" placeholder="This is how you got the problem to happen."></textarea>
+    </p>
+    <p>
+      <label for="bug_desc">Bug Description:</label>
+      <textarea id="bug_desc" name="bug_desc" cols="80" rows="18" 
+        tabindex="1" placeholder="This is a general description of the problem."></textarea>
+    </p>
+    <script type="text/javascript"
+     src="http://www.google.com/recaptcha/api/challenge?k=6LdJZd0SAAAAAIWufcKHY9YmH_JJuqnLbPwPDcWx ">
+    </script>
+    <noscript>
+     <iframe src="http://www.google.com/recaptcha/api/noscript?k=6LdJZd0SAAAAAIWufcKHY9YmH_JJuqnLbPwPDcWx"
+         height="300" width="500" frameborder="0"></iframe><br>
+     <textarea name="recaptcha_challenge_field" rows="3" cols="40">
+     </textarea>
+     <input type="hidden" name="recaptcha_response_field"
+         value="manual_challenge">
+    </noscript>
+    <input type="submit" value="Submit Bug Report" />
+  </fieldset>
+</form>
