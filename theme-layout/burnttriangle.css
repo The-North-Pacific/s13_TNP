@@ -2227,3 +2227,24 @@ overflow:auto;
   -moz-transition: width 0.6s; /* Firefox 4 */
   -o-transition: width 0.6s; /* Opera */
 }
+/* grouplabels */
+#grouplabels {  
+  text-align: center; 
+  background:#151515 url(http://z4.ifrm.com/30079/55/0/p1038315/Light.png) top repeat-x;
+  border:1px solid black;
+  margin:30px 5% 0px 5%;
+  padding:30px 30px 10px;
+}
+#grouplabels>div {padding 1ex;  }
+#grouplabels>p {margin-bottom: 1em; margin-top: -1em; font-weight: bold; font-size: 120%;}
+#grouplabels .admin { color: #0000CD; font-weight: bold}
+#grouplabels .mod {color: #FF3030; font-weight: bold}
+#grouplabels .cabinet { color: #009900; font-weight: bold}
+#grouplabels .delegate { color: #BB3A3A; font-weight: bold}
+#grouplabels .vicedel { color: #660000; font-weight: bold}
+#grouplabels .court { color: #820BBB; font-weight: bold}
+#grouplabels .assembly { color: #FF7F00; font-weight: bold}
+#grouplabels .diplomat { color: #0099FF; font-weight: bold}
+#grouplabels .citizen { color: #FF6600; font-weight: bold}
+.council { color: #B8860B; font-weight: bold}
+.envoy { color: #000033; font-weight: bold}
