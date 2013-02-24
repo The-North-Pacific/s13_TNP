@@ -1,21 +1,33 @@
- <script type="text/javascript">
+<script type="text/javascript">
  var RecaptchaOptions = {
     theme : 'clean'
  };
+ function notice(msg) {
+   var note = $('<dl class="notice info">').append(
+     '<dt>Notice</dt>',$('<dd>').text(msg)
+     );
+   $("#main").prepend(note);
+ }
  $(document).ready(function(){
-  $("#member_id").val($('#top_info>strong>a').attr('href').split("/")[4]);
-  $("#member_name").val($('#top_info>strong>a').text());
-  if( window.location.hash && window.location.hash[1] == '!' ) {
-      var msg = window.location.hash.slice(2);
-      var notice = $('<dl class="notice info">').append(
-        '<dt>Notice</dt>',$('<dd>').text(msg)
-        );
-      $("#main").prepend(notice);
-  }
+   var profile_link=$('#top_info>strong>a').attr('href');
+   if( profile_link ) {
+     $("#member_id").val(profile_link.split("/")[4]);
+   }
+   $("#member_name").val($('#top_info>strong>a').text());
+   if( window.location.hash && window.location.hash[1] == '!' ) {
+     var msg = window.location.hash.slice(2);
+     notice(msg);
+   }
+   if( profile_link === undefined ) {
+     notice("You should to be logged in to file a bug report!");
+     $("#bug_report_form").hide();
+   }
  });
- </script>
-<form method="POST" action="http://www.thenorthpacific.org/github/bug_report.cgi">
-  <fieldset>
+</script>
+<form method="POST" 
+      action="http://www.thenorthpacific.org/github/bug_report.cgi" 
+      id="bug_report_form">
+  <fieldset style="border: 1px;">
     <legend>Bug Report</legend>
     <input type="hidden" id="member_id" name="member_id" />
     <input type="hidden" id="member_name"  name="member_name" />
