@@ -4,7 +4,7 @@
  };
  function notice(msg) {
    var note = $('<dl class="notice info">').append(
-     '<dt>Notice</dt>',$('<dd>').text(msg)
+     '<dt>Error</dt>',$('<dd>').text(msg)
      );
    $("#main").prepend(note);
  }
@@ -37,7 +37,7 @@
         placeholder="What is broken" />
     </p>
     <p>
-      <label for="bug_url">Broken URL:</label>
+      <label for="bug_url">Broken (Public) URL:</label>
       <input type="text" id="bug_url" name="bug_url" maxlength="128" size="40"
         placeholder="e.g. http://forum.thenorthpacific.org/pages/bug-report/" />
     </p>
