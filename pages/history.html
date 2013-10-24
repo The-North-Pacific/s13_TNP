@@ -107,6 +107,10 @@ function generateChart( data, ykey, topkey, container, title ) {
       text: title
     },
     labels: { style: { color: 'rgb(60,39,9)' } },
+    legend: { 
+      itemStyle: { color: 'rgb(60,39,9)' },
+      itemHiddenStyle: { color: 'rgb(122,116,88)' }
+    },
     credits: { enabled: false },
     xAxis: {
       title: { text: 'Time' },
