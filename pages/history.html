@@ -1,9 +1,14 @@
 <script type="text/javascript" src="http://z5.ifrm.com/9057/121/0/f5157343/highcharts.js"></script>
 <h1><a id="zoomout">SC Endorsement Records</a></h1>
+<p><a id="left_link" style="display:none">« Back Two Weeks</a>
+<a id="right_link" style="display:none">Forward Two Weeks »</a></p>
 <div id="received-chart-container"></div>
 <div id="given-chart-container"></div>
 <div id="influence-chart-container"></div>
 <script type="text/javascript">
+// date navication code added here and below 2013-02-23 by Elu
+var one_day = 24*3600*1000;
+var two_weeks = 14*one_day;
 // code added 2013-01-08 to allow URLs linking to particular settings by Elu
 $("#zoomout").attr('href',location.protocol+'//'+location.host+location.pathname);
 if( window.location.hash ) {
@@ -19,6 +24,21 @@ if( window.location.hash ) {
     return ranks[Name] < 10;
   };
 }
+function time_link(id,from,to) {
+  function zeropad(n){
+    var s="00"+n;
+    return s.slice(s.length-2);
+  }
+  var pref='http://'+window.location.host+window.location.pathname;
+  var datefn=function(ts){
+    t=new Date(ts);
+    return [t.getFullYear(),zeropad(t.getMonth()+1),zeropad(t.getDate())].join("-");
+  };
+  var search=datefn(from)+":"+datefn(to);
+  var url=pref+"?"+search+window.location.hash;
+  $("#"+id).attr('href',url);
+  $("#"+id).show();
+}
 if( window.location.search ) {
   var range = window.location.search.slice(1).split(':');
   if( range.length != 2 ) {
@@ -26,11 +46,16 @@ if( window.location.search ) {
   }
   var from=new Date(range[0]).getTime();
   var to=new Date(range[1]).getTime();
-  var q={from:from/1000,to:to/1000};
+  var q={from:parseInt(from/1000),to:parseInt(to/1000)};
+  var prev=from  - two_weeks;
+  time_link("left_link",prev,prev+2*two_weeks);
+  var next=to - two_weeks;
+  time_link("right_link",next,next+2*two_weeks);
 } else {
-  var from=null;
-  var to=null;
-  var q='';
+  var to=new Date().getTime();
+  var from=to - to%one_day - (to - to%one_day) % two_weeks - two_weeks;
+  var q={from:parseInt(from/1000),to:parseInt(to/1000)};
+  time_link("left_link",from-two_weeks,from+two_weeks);
 }
 // main code
 var charts={};
@@ -74,13 +99,14 @@ function generateChart( data, ykey, topkey, container, title ) {
   var arg={
     chart: {
       renderTo: container,
-      backgroundColor: 'rgb(230,230,230)',
+      backgroundColor: 'rgb(220,214,185)',
       defaultSeriesType: 'spline',
       zoomType: 'x'
     },
     title: {
       text: title
     },
+    labels: { style: { color: 'rgb(60,39,9)' } },
     credits: { enabled: false },
     xAxis: {
       title: { text: 'Time' },
@@ -111,7 +137,7 @@ function generateChart( data, ykey, topkey, container, title ) {
 }
 $(document).ready(function(){
   $.ajax({
-    url:"http://www.thenorthpacific.org/log/logs.php",
+    url:"http://www.thenorthpacific.org/osiris/log/logs.php",
     dataType:'jsonp',
     data:q,
     jsonp: 'jsonp',
