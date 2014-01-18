@@ -1,0 +1,205 @@
+<script type="text/javascript" src="http://z5.ifrm.com/9057/121/0/f5151052/jquerytablesortermin.js"></script>
+<style type="text/css">
+#security p>span, #security h1>span, #security h3>span, p#alert_msg {
+ min-width: 100px;
+ border-radius:2em;
+}
+
+table.SC {
+overflow:hidden;
+word-wrap:break-word;
+width:auto;
+}
+
+table.SC tr.hidden {
+display:none;
+}
+
+table.SC td {
+font-style:italic;
+font-weight:700;
+margin-left:8px;
+}
+
+table.SC#sc a, table.SC#sc a:visited, table.SC a.council_of_maat, table.SC a.council_of_maat:visited {
+color: #E80505;
+}
+
+table.SC#delegate a, table.SC#delegate a:visited, table.SC a.pharaoh, table.SC a.pharaoh:visited{
+color: #C3C272;
+}
+
+table.SC#vice_delegate a, table.SC#vice_delegate a:visited, table.SC a.kai_repat, table.SC a.kai_repat:visited {
+color: #008000;
+}
+
+table.SC a.pharaoh_emeritus, table.SC a.pharaoh_emeritus:visited {
+color: #866EFF;
+}
+
+table.SC a.kai_repat_emeritus, table.SC a.kai_repat_emeritus:visited {
+color: #866EFF;
+}
+
+table.SC a.citizen, table.SC a.citizen:visited, table.SC a.citizen:hover {
+color: #B1A05B;
+}
+
+
+table.SC a.other, table.SC a.other:visited {
+font-weight:normal;
+}
+
+table.SC a:active, table.SC a:hover {
+color: #00CC00;
+}
+
+th.header {
+  cursor: pointer;
+  padding-right:21px;
+  background-image: url(http://z5.ifrm.com/9057/121/0/f5151056/bg.gif);
+  background-repeat: no-repeat;
+  background-position: right center;
+}
+
+th.headerSortDown {
+  background-image: url(http://z5.ifrm.com/9057/121/0/f5151055/desc.gif);
+}
+
+th.headerSortUp {
+  background-image: url(http://z5.ifrm.com/9057/121/0/f5151054/asc.gif);
+}
+</style>
+<script type="text/javascript">
+function show_nation(idx,nation) {
+  return idx < 10;
+}
+
+function legal_max(del_endos) { return 20; }
+
+function nation_class(nation, osi, sc) {
+  if( nation.name == osi.legal_delegate.name )
+    return 'pharaoh';
+  if( nation.name == osi.vice_delegate.name )
+    return 'kai_repat';
+  if( nation.name in sc )
+    return 'council_of_maat';
+//  if( osi.former_delegates.indexOf(nation.name) >= 0 )
+//    return 'pharaoh_emeritus';
+//  if( osi.former_vice_delegates.indexOf(nation.name) >= 0 )
+//    return 'kai_repat_emeritus';
+//  if( osi.mg.indexOf(nation.name) >= 0 )
+//    return 'medjai_guard';
+  if( osi.ra.indexOf(nation.name) >= 0 )
+    return 'citizen';
+  return 'other';
+}
+
+function sc_color(vd, member) {
+  if( member.endos > vd.endos )
+    return "crimson";
+  if( member.endos >= Math.max(vd.endos*0.9,vd.endos-10) )
+    return "darkkhaki";
+  return "darkgreen";
+}
+
+function nation_color(del,vd,sc,nation) {
+  if( nation.name in sc )
+    return sc_color(del,nation);
+  if( nation in sc )
+    return sc_color(vd,nation);
+  if( nation.name == del.name ) 
+    return "darkgreen";
+  if( nation.name == vd.name )
+    return sc_color( del, nation );
+  if( nation.endos > legal_max(del.endos) )
+    return "crimson";
+  if( nation.endos >= Math.max(legal_max(del.endos)*0.75,legal_max(del.endos)-20) )
+    return "darkkhaki";
+  return "darkgreen";
+}
+
+function show_all_top() {
+  $('.hidden').removeClass('hidden');
+}
+
+function update_info(osi) {
+  $(document).ready(function(){
+    $("#delegate td.nation").replaceWith('<td class="nation"><a href="http://www.nationstates.net/nation='+osi.legal_delegate.name+'">'+osi.legal_delegate.Name+"</a></td>");
+    $("#delegate td.endos").replaceWith('<td class="endos">'+osi.legal_delegate.endos+"</td>");
+    $("#delegate td.max").replaceWith('<td class="max">'+legal_max(osi.legal_delegate.endos)+"</td>");
+    $("#vice_delegate td.nation").replaceWith('<td class="nation"><a href="http://www.nationstates.net/nation='+osi.vice_delegate.name+'">'+osi.vice_delegate.Name+"</a></td>");
+    $("#vice_delegate td.endos").replaceWith('<td class="endos">'+osi.vice_delegate.endos+"</td>");
+    str='<table class="SC" width="300" id="sc"><thead><tr><th>#</th><th>Member</th><th>Endorsements</th><th>Influence</th></tr></thead><tbody>';
+    var sc={};
+    $.each( osi.sc, function(idx,member){
+      if( member ) {
+        sc[member.name]=true;
+        str+='<tr><th>&nbsp;</th><th><a href="http://www.nationstates.net/nation='+member.name+'">'+member.Name+"</a></th>";
+        str+='<td style=" color:'+sc_color(osi.vice_delegate,member)+';">'+member.endos+"</td><td>"+member.influence_rank+"</td></tr>";
+      }
+    });
+    str+="</tbody></table>";
+    $("#sc").replaceWith(str);
+    var cb=function(){
+      $(".c_post").replaceWith(function(){
+        return $(this).contents();
+      });
+    };
+//    $("#alert_msg").load(alerts.msg, cb);
+//    $("#alert_lvl").load(alerts.lvl, cb);
+    $("#sc").after('<p style="font-style:italic; font-weight:bold; font-size:12pt;"><span>Top Osiris Nations</span></p><p><span>by endorsements or influence</span.</p><p><a href="#show_all" onclick="show_all_top();" name="show_all">Show all</a></p>',$("<table>",{
+      id:'top_nations',
+      class:'SC tablesorter',
+      width:'300'
+    }).append('<thead><tr><th>#</th><th>Member</th><th>Received</th><th>Given</th><th>Rank</th><th>Score</th></tr></thead>',$('<tbody>').append($.map( osi.top, function(nation,idx){
+      if(nation) { 
+        return (show_nation(idx,nation) ? '<tr>' : '<tr class="hidden">' ) +'<th>'+(idx+1)+'</th><th><a href="http://www.nationstates.net/nation='+nation.name+'" class="'+nation_class(nation,osi,sc)+'" title="'+nation_class(nation,osi,sc).replace(/_/g,' ')+'">'+nation.Name+'</a></th><td style="color:'+nation_color(osi.legal_delegate,osi.vice_delegate,sc,nation)+'">'+nation.endos+'<td>'+nation.endos_given+'</td><td>'+nation.influence_rank+'</td><td>'+nation.influence_score+'</td></tr>' ;
+      }
+    }).join())));
+    $("#sc").tablesorter({headers:{1:{sorter:false},3:{sorter:false}}});
+    $("#sc tbody th:first-child").text(function(idx,o){return idx+1;});
+    $("#top_nations").tablesorter({sortList:[[2,1]],headers:{0:{sorter:false},1:{sorter:false},4:{sorter:false}}});
+    $("#top_nations").bind('sortStart',function(){
+      $("#top_nations tbody th:first-child").text(function(idx,o){return '';});
+    }).bind('sortEnd',function(){
+      $("#top_nations tbody th:first-child").text(function(idx,o){return idx+1;});
+    });
+    if( window.location.hash == '#show_all' ){
+      show_all_top();
+      document.getElementById('top_nations').scrollIntoView(true);
+    }
+    now=new Date();
+    setTimeout(function(){
+      $('head').append('<script type="text/javascript" src="http://www.thenorthpacific.org/osiris/region_info.fcgi?jsonp=update_info"><&#092;/script>');
+    },1000*(60*(4-now.getUTCMinutes()%5) + 60-now.getUTCSeconds())+1000-now.getUTCMilliseconds());
+  });
+}
+</script>
+<script type="text/javascript" src="http://www.thenorthpacific.org/osiris/region_info.fcgi?jsonp=update_info"></script>
+
+<center id="security"><h1><span>Osiris Security Overview</span></h1>
+<img src="http://i.imgur.com/30GiD.png" alt="">
+<br><noscript><p style="font-style:italic; font-weight:bold; font-size:12pt; color:red;"><span>Because you have javascript disabled, the information below may be wildly out of date</span></p></noscript>
+
+<p style="font-style:italic; font-weight:bold; font-size:12pt;"><span>Overview</span></p>
+<table class="SC" id="delegate">
+<tbody><tr><th>Pharaoh:</th>
+<td class="nation"><a href="http://www.nationstates.net/nation=hileville">Hileville</a></td></tr>
+<tr><th>Pharaoh Endorsements:</th>
+<td class="endos">240</td></tr>
+<tr><th>Endorsement Cap:</th>
+<td class="max">20</td></tr>
+</tbody></table>
+
+<p style="font-style:italic; font-weight:bold; font-size:12pt;">Kai Repat</p>
+<table class="SC" id="vice_delegate">
+<tbody><tr><th>Kai Repat:</th>
+<td class="nation"><a href="http://www.nationstates.net/nation=mcmasterdonia">McMasterdonia</a></td></tr>
+<tr><th>Kai Repat Endorsements:</th>
+<td class="endos">298</td></tr>
+</tbody></table><br>
+
+<p style="font-style:italic; font-weight:bold; font-size:12pt;"><span>Council of Maat</span></p>
+<table class="SC" id="sc"><thead><tr><th class="header">#</th><th>Member</th><th class="header">Endorsements</th><th>Influence</th></tr></thead><tbody><tr><th>1</th><th><a href="http://www.nationstates.net/nation=fudgetopia">Fudgetopia</a></th><td style=" color:darkgreen;">153</td><td>Eminence Grise</td></tr><tr><th>2</th><th><a href="http://www.nationstates.net/nation=brutland_and_norden">Brutland and Norden</a></th><td style=" color:darkgreen;">185</td><td>Negotiator</td></tr><tr><th>3</th><th><a href="http://www.nationstates.net/nation=milograd">Milograd</a></th><td style=" color:darkgreen;">189</td><td>Minnow</td></tr></tbody></table>
+<p style="font-size:50%;"><span>Provided by <a href="http://www.nationstates.net/region=the_north_pacific">The North Pacific</a> &#124; Code by <a href="http://forum.thenorthpacific.org/profile/197685/">Eluvatar</a></span></p></center>
