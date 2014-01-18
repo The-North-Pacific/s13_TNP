@@ -10,12 +10,13 @@
 .citizen { color: #FF6600; font-weight: bold}
 .council { color: #B8860B; font-weight: bold}
 .envoy { color: #000033; font-weight: bold}
+.speaker { color: #f91493; font-weight: bold}
 
 #grouplabels {  text-align: center; background:none repeat scroll 0 0 #E6E6E6;
 border:1px solid #CACACA;
 margin:30px 5%;
 padding:30px 30px 10px;}
-#grouplabels>div {padding 1ex;  }
+#grouplabels>div {padding: 1ex;  }
 #grouplabels>p {margin-bottom: 1em; margin-top: -1em; font-weight: bold; font-size: 120%;}
 
 #news { text-align: center; }
@@ -652,7 +653,7 @@ border-color:#FFF;
 }
 
 blockquote, #blog blockquote blockquote {
-background:#eaeaea2;
+background:#eaeaea;
 margin:10px auto;
 padding-bottom:1px;
 width:98%;
@@ -1396,7 +1397,7 @@ height:1px;
 
 td.c_sig,td.c_nosig {
 background:#eee;
-height:1%;
+height:0.5%;
 vertical-align:top;
 }
 
