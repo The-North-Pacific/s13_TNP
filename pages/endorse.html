@@ -1,0 +1,34 @@
+<script type="text/javascript">
+
+function get_tarting(list) {
+//  $.get('http://forum.thenorthpacific.org/home/?c=6',function(data){
+    $(document).ready(function(){
+//      var nation=$(data).find('input[name=choice_661]').val();
+//      var nation_id=nation.toLowerCase().replace(/ /g,"_");
+      var tr=$('<tr>');
+      $.each(list,function(i,n){
+        var j=parseInt(i)+1;
+        $('#todo tbody').append(
+          tr.clone().append(
+            $('<td></td>',{text:j}),
+            $('<td></td>',{class:'link'}).append(
+              '<a href="http://www.nationstates.net/nation='+n+'">'+n+'</a>'
+            )
+          )
+        );
+      });
+       $("#csv").text(list.join());  
+
+//    });
+  });
+}
+</script>
+<script type="text/javascript" src="http://www.thenorthpacific.org/region_was.php?jsonp=get_tarting"></script>
+<div id="csv_spoiler" class="spoiler_toggle">Comma Separated List</div>
+<div class="spoiler" style="display:none;" id="csv">
+</div>
+<table id="todo">
+<tbody>
+  <tr><th>#</th><th>Nation</th></tr>
+</tbody>
+</table>
