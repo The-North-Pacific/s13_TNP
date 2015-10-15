@@ -57,6 +57,12 @@ $(document).ready( function() {
 $(document).ready( function() {
   $("#forum-39650").next().next().hide();
 });
+// code to "fix" theme switcher
+// -- result: theme switcher redirects to homepage instead of error page
+//    unable to fix redirection back to point of origin
+$(document).ready( function() {
+  $("#foot_themechooser [name=r]").val('');
+});
 </script>
 
 <script type='text/javascript' src='http://z6.ifrm.com/4812/177/0/f5018893/bbtags31_xanik.js'></script><script>ubb_tag("Nation","nation","<a href='http://www.nationstates.net/nation=<% INNER %>'><% INNER %></a>",0,"Links to a nation on NationStates"); ubb_tag("Region","region","<a href='http://www.nationstates.net/region=<% INNER %>'><% INNER %></a>",0,"Links to a region on NationStates");
