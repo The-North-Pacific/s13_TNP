@@ -1054,7 +1054,8 @@ white-space:nowrap;
 }
 
 #mycopy {
-background:url(http://z3.ifrm.com/229/151/0/p190407/blue.jpg) repeat-x top #a4d550;
+background:url(http://z3.ifrm.com/229/151/0/p190407/blue.jpg) repeat-x top #7bbdfa;
+background-size: auto 38px;
 padding: 3px;
 border:1px solid #0d4e91;
 color: #fff;
