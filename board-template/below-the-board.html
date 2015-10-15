@@ -57,11 +57,16 @@ $(document).ready( function() {
 $(document).ready( function() {
   $("#forum-39650").next().next().hide();
 });
-// code to "fix" theme switcher
-// -- result: theme switcher redirects to homepage instead of error page
-//    unable to fix redirection back to point of origin
+// code to "fix" theme switcher (by bypassing it)
+// based on http://support.zathyus.com/single/?p=18101209&t=5227287
 $(document).ready( function() {
-  $("#foot_themechooser [name=r]").val('');
+  $("#foot_themechooser").submit( function(e) {
+    e.preventDefault();
+    var skin = $(this).find('#setskin').val();
+    $.get(main_url + 'index/?setskin=' + skin).done(function(){
+      window.location.reload();
+    });
+  });
 });
 </script>
 
