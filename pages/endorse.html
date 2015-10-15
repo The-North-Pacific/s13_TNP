@@ -1,18 +1,40 @@
 <script type="text/javascript">
-
-function get_tarting(list) {
-//  $.get('http://forum.thenorthpacific.org/home/?c=6',function(data){
-    $(document).ready(function(){
-//      var nation=$(data).find('input[name=choice_661]').val();
-//      var nation_id=nation.toLowerCase().replace(/ /g,"_");
-      var tr=$('<tr>'); // const
-      $.each(list,function(i,n){
+  var forum_baseurl = 'http://forum.thenorthpacific.org';
+  var security_baseurl = 'http://www.thenorthpacific.org/region_was.php';
+  var profile_nation_field = '661';
+  $(function() {
+    var buildTableForNation = function(nation){
+      if( nation != null ) {
+        nation = nation.toLowerCase().replace(/ /g,'_');
+        console.log("nation: "+nation);
+        var url = security_baseurl+"?nation=" + nation;
+      } else {
+        var url = security_baseurl;
+      }
+      $.getJSON(url,function(list){
+      var tr=$('<tr>',{class:'data'}); // const
+      $.each(list, function(i, n) {
         var j=parseInt(i)+1;
+        var evenOddCallbacks = [
+          function() {
+            $("iframe[name=nationstates-a]").show();
+            $("iframe[name=nationstates-b]").hide();
+          },
+          function() {
+            $("iframe[name=nationstates-a]").hide();
+            $("iframe[name=nationstates-b]").show();
+          },
+        ];
+        var evenOddTargets = ["nationstates-a","nationstates-b"];
         $('#todo tbody').append(
           tr.clone().append(
             $('<td></td>',{text:j}),
             $('<td></td>',{class:'link'}).append(
-              '<a href="http://www.nationstates.net/nation='+n+'">'+n+'</a>'
+              $('<a></a>',{
+                href: 'http://embed.nationstates.net/nation='+n+'#composebutton',
+                text: n,
+                target: evenOddTargets[j%2],
+              }).click(moveBox(evenOddCallbacks[j%2]))
             )
           )
         );
@@ -22,16 +44,64 @@ function get_tarting(list) {
       for( var i=0; i<list.length; i += chunksize ) {
         $csv.append( $("<p></p>",{text:list.slice(i,i+chunksize).join()+","}) );
       }
-//    });
+    }); };
+    var nation = document.location.search.slice(1);
+    if( nation === "" ) {
+      var wrap = function(callback){
+        $.get(forum_baseurl+'/home/?c=6',function(data){
+          var nation  = $(data).find('input[name=choice_'+profile_nation_field+']').val();
+          if( nation === "" ) {
+            nation = null;
+          } else {
+            $("#nation").val(nation);
+          }
+          callback(nation);
+        });
+      };
+    } else {
+      var wrap = function(callback){callback();};
+      $("#nation").val(nation);
+    }
+    wrap(buildTableForNation);
+    $("#nation").change(function(){
+      var nation = $("#nation").val();
+      window.history.pushState({"pageTitle":document.title}, "", document.location.href.split("?")[0]+"?"+nation);
+      $("td:not(#nsbox)").remove();
+      buildTableForNation(nation);
+    });
   });
-}
+  
+  function moveBox(callback){
+    return function() {
+      var $nsbox = $("#nsbox");
+      $nsbox.detach();
+      if( $nsbox.data("activerow") ) {
+        $nsbox.data("activerow").detach();
+      }
+      var target = $(this).parent().parent().prevAll(".data").slice(0,19).last();
+      if( target.length == 0 ) {
+        target = $(this).parent().parent();
+      }
+      target.append($nsbox);
+      $nsbox.data("activerow",$(this).parent().parent());
+      callback();
+    }
+  }
 </script>
-<script type="text/javascript" src="http://www.thenorthpacific.org/region_was.php?jsonp=get_tarting"></script>
+<p>Nation: <input id="nation" type="text"/></p>
 <div id="csv_spoiler" class="spoiler_toggle">Comma Separated List</div>
 <div class="spoiler" style="display:none;" id="csv">
 </div>
 <table id="todo">
-<tbody>
-  <tr><th>#</th><th>Nation</th></tr>
-</tbody>
+  <tbody>
+    <tr><th>#</th><th>Nation</th><th>NationStates Frame</th></tr>
+    <tr style="display:none">
+      <td></td>
+      <td></td>
+      <td id="nsbox" rowspan="20">
+        <iframe name="nationstates-a" style="min-width:525px;min-height:525px;"></iframe>
+        <iframe name="nationstates-b" style="min-width:525px;min-height:525px;"></iframe>
+      </td>
+    </tr>
+  </tbody>
 </table>
