@@ -74,11 +74,11 @@ function show_nation(idx,nation) {
 }
 
 function legal_min(del_endos) {
-  return Math.min(del_endos/2,50);
+  return Math.min(del_endos/2,200);
 }
 
 function legal_max(del_endos) {
-  return Math.max(del_endos*0.85,del_endos-20);
+  return Math.max(del_endos*0.85,del_endos-40);
 }
 
 function nation_class(nation, tnp, sc) {
@@ -171,6 +171,7 @@ function update_info(tnp) {
     };
     $("#alert_msg").load(alerts.msg, cb);
     $("#alert_lvl").load(alerts.lvl, cb);
+    $("#endo_saturation").replaceWith('<span id="endo_saturation">'+parseInt(tnp.endo_saturation*10000)/100.0+'%</span>');
     $("#sc").after('<p style="font-style:italic; font-weight:bold; font-size:12pt;">Top TNP Nations</p><p>by endorsements or influence</p><p><a href="#show_all" onclick="show_all_top();" name="show_all">Show all</a></p>',$("<table>",{
       id:'top_nations',
       class:'SC tablesorter',
@@ -198,31 +199,37 @@ function update_info(tnp) {
 <center><h1><a href="http://forum.thenorthpacific.org/forum/39623/">Security Council of the North Pacific</a></h1>
 <img src="http://www.thenorthpacific.org/images/forum/sc-seal.png" alt="">
 <br><noscript><p style="font-style:italic; font-weight:bold; font-size:12pt; color:red;">Because you have javascript disabled, the information below may be wildly out of date</p></noscript>
-<p style="font-style:italic; font-weight:bold; font-size:12pt;">Alerts</p><p style="width:400px" id="alert_msg"><a href="http://www.nationstates.net/nation=-t-h-o-r-">-T-h-o-r-</a> and <a href="http://www.nationstates.net/nation=sheep_face">Sheep Face</a> have been caught sending messages which impersonate the government. -T-h-o-r-'s messages were also false and a clear fraud attempting to make trouble and do not represent the official government of The North  Pacific.
+<p style="font-style:italic; font-weight:bold; font-size:12pt;">Alerts</p><p style="width:400px" id="alert_msg">This is not a live page, please visit <a href="http://forum.thenorthpacific.org/single/?p=8074444&t=6983682">here</a> for the most up to date information.
 </p>
 
 <h3 style="width:400px">Regional alert level: <span id="alert_lvl"><span style=" color: darkkhaki; ">Yellow</span></span></h3>
 
+<h3 style="width:400px">Endorsement saturation: <span id="endo_saturation">???</span></h3>
+
 <p style="font-style:italic; font-weight:bold; font-size:12pt;">Overview</p>
 <table class="SC" id="delegate">
 <tbody><tr><th>Legal Delegate:</th>
-<td class="nation"><a href="http://www.nationstates.net/nation=zemnaya_svoboda">Zemnaya Svoboda</a></td></tr>
+<td class="nation"><a href="http://www.nationstates.net/nation=">???</a></td></tr>
 <tr><th>Delegate Endorsements:</th>
-<td class="endos">318</td></tr>
+<td class="endos">???</td></tr>
 <tr><th>Legal Minimum Endorsements for Security Council members:</th>
-<td class="min">50</td></tr>
+<td class="min">???</td></tr>
 <tr><th>Legal Maximum Endorsements for Security Council members:</th>
-<td class="max">298</td></tr>
+<td class="max">???</td></tr>
 </tbody></table>
 
 <p style="font-style:italic; font-weight:bold; font-size:12pt;">Vice Delegate</p>
 <table class="SC" id="vice_delegate">
 <tbody><tr><th>Vice Delegate:</th>
-<td class="nation"><a href="http://www.nationstates.net/nation=mcmasterdonia">McMasterdonia</a></td></tr>
+<td class="nation"><a href="http://www.nationstates.net/nation=">???</a></td></tr>
 <tr><th>Vice Delegate Endorsements:</th>
 <td class="endos">298</td></tr>
 </tbody></table><br>
 
 
 <p style="font-style:italic; font-weight:bold; font-size:12pt;">Security Council</p>
-<table class="SC" id="sc" width="300"><tbody><tr><th>Member</th><th>Endorsements</th></tr><tr><th><a href="http://www.nationstates.net/nation=pasargad">Pasargad</a></th><td style=" color:darkgreen;">235</td></tr><tr><th><a href="http://www.nationstates.net/nation=grosseschnauzer">Grosseschnauzer</a></th><td style=" color:darkgreen;">240</td></tr><tr><th><a href="http://www.nationstates.net/nation=zemnaya_svoboda">Zemnaya Svoboda</a></th><td style=" color:darkgreen;">318</td></tr><tr><th><a href="http://www.nationstates.net/nation=denarian_knight">Denarian Knight</a></th><td style=" color:darkgreen;">226</td></tr><tr><th><a href="http://www.nationstates.net/nation=great_bights_mum">Great Bights Mum</a></th><td style=" color:darkgreen;">199</td></tr><tr><th><a href="http://www.nationstates.net/nation=former_english_colony">Former English Colony</a></th><td style=" color:darkgreen;">191</td></tr><tr><th><a href="http://www.nationstates.net/nation=blackshear41">Blackshear41</a></th><td style=" color:darkgreen;">174</td></tr></tbody></table></center>
+<table class="SC" id="sc" width="300"><tbody><tr><th>Member</th><th>Endorsements</th></tr><tr><th>
+
+<a href="http://www.nationstates.net/nation=">???</a></th>
+
+<td style=" color:darkgreen;">???</td></tr></tbody></table></center>

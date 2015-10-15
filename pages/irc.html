@@ -1,0 +1,20 @@
+<!-- Mibbit IRC -->
+<div id="mibbit"><script type="text/javascript">
+// <!--
+$("#tnp").ready( function() {
+  $.get("/home/?c=6", function(data){
+    irc_list=$(data).find('textarea[name="choice_1517"]')[0]["value"];
+    var nick=$("#top_info>strong>a").text().replace(" ","_");
+    if( irc_list.match("^(#[A-Za-z0-9_]+)(,#[A-Za-z0-9_]+)*$") ) {
+      var chan=irc_list.replace(/#/g,"%23").replace(/,/g,"%2C").replace(/ /g,"%20");
+      var src="http://widget.mibbit.com/?settings=f2e84d3d53ecfc86fc1042b357c84157&server=irc.esper.net&channel="+chan+"&nick="+nick;
+    } else {
+       var src="http://widget.mibbit.com/?settings=f2e84d3d53ecfc86fc1042b357c84157&server=irc.esper.net&channel=%23tnp&nick="+nick;
+    }
+    $("#tnp").attr("src",src);
+  });
+});
+// -->
+</script>
+<iframe id="tnp" style="width:100%;" height="500"src="http://widget.mibbit.com/?settings=f2e84d3d53ecfc86fc1042b357c84157&server=irc.esper.net&channel=%23tnp"></iframe>
+<p><b>Note:</b> change the IRC Channel List setting <a href="/home/?c=6">here</a> to change the list of channels you join automatically.</p></div>

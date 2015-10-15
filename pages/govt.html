@@ -1,0 +1,199 @@
+<div id="govtbox" class="category">
+	<table class="cat_head" id="govt_header">
+		<tr><td>
+			<h2 class="special">
+				<span class="collapse" onclick="toggle_govt();">
+					<img src='http://www.thenorthpacific.org/images/forum/Aquatica%20Gfx/Misc/collapse.png' alt='-' />
+				</span>
+				Current Government
+			</h2>
+		</td></tr>
+	</table>
+	<table id="govt" class="forums" cellspacing="0" style="display:table;"></table>
+</div>
+<script type="text/javascript">
+$("#govt").ready(function(){
+
+
+// to reuse {"forum_name":"r3naissanc3r","forum_id":197985}, {"forum_name":"RPI","forum_id":3268820}, {"forum_name":"Eluvatar","forum_id":197685},
+// code for a vacancy is "Vacant"
+/* 
+ADMIN NOTE: START OF NAME AREA.
+Edit the area below to change the names of the various officials.
+*/
+	var govt_members = {
+		"speaker": {"forum_name":"Crushing Our Enemies","forum_id":3148393},	
+		"deputy_speakers": [
+			{"forum_name":"Zyvetskistaahn","forum_id":3157760},
+                        {"forum_name":"quak1234","forum_id":3280303},
+		],
+		"delegate": {"forum_name":"SillyString","forum_id":3163742},
+		"ministers":{
+			"Foreign Affairs":{"forum_name":"Myroria","forum_id":3251704},
+			"Culture and Entertainment":{"forum_name":"Lennart","forum_id":3140244},
+			"Defense":{"forum_name":"McMasterdonia","forum_id":3108012},
+			"WA Affairs":{"forum_name":"Mall","forum_id":3126518},
+			"Communications":{"forum_name":"Kialga","forum_id":3195024},
+                        "Education":{"forum_name":"McMasterdonia","forum_id":3108012},
+		        "Home Affairs": {"forum_name":"Tomb","forum_id":3216269},
+},
+		"vice_delegate":{"forum_name":"Myroria","forum_id":3251704},
+		"security_council":[
+			{"forum_name":"Romanoffia","forum_id":198591},
+                        {"forum_name":"McMasterdonia","forum_id":3108012},
+                        {"forum_name":"Democratic Donkeys","forum_id":197283},
+                        {"forum_name":"Grosseschnauzer","forum_id":197293},
+                       	{"forum_name":"Former English Colony","forum_id":197281},
+                        {"forum_name":"Great Bights Mum","forum_id":197338},
+                        {"forum_name":"Crushing Our Enemies","forum_id":3148393},             
+                        {"forum_name":"Malvad","forum_id":3119031},
+                        {"forum_name":"SillyString","forum_id":3163742},
+                        {"forum_name":"Nessuno","forum_id":3257077},
+                        {"forum_name":"Plembobria","forum_id":3252480},
+                        {"forum_name":"Lord Ravenclaw","forum_id":3145766},
+		],
+		"chief_justice":	{"forum_name":"Plembobria","forum_id":3252480},
+		"associate_justices":[
+			{"forum_name":"flemingovia","forum_id":197299},
+                        {"forum_name":"punk d","forum_id":197317},
+		],
+		"attorney_general":[
+{"forum_name":"Falapatorius","forum_id":3193019},
+                ],
+	};
+/* 
+ADMIN NOTE: END OF NAME AREA.
+*/
+
+/* 
+ADMIN NOTE: START OF LAYOUT AREA.
+Edit the area below to change the government layout.
+*/
+	var govt_layout = {
+		"Legislative":["speaker","deputy_speakers"],
+		"Executive":["delegate","ministers","attorney_general"],
+		"Judicial":["chief_justice","associate_justices"],
+		"Security":["vice_delegate","security_council"],
+	};
+/* 
+ADMIN NOTE: END OF LAYOUT AREA.
+*/
+
+/* 
+ADMIN NOTE: START OF COLOR AREA.
+Edit the area below to change the colors for the various offices..
+*/
+	var c = {
+		"speaker":"deeppink",
+		"deputy_speakers":"hotpink",
+		"delegate":"firebrick",
+		"ministers":"green",
+		"deputy_ministers":"limegreen",
+		"vice_delegate":"maroon",
+		"security_council":"goldenrod",
+		"chief_justice":"indigo",
+		"associate_justices":"indigo",
+		"attorney_general":"darkorchid",
+		"prosecutors":"mediumorchid"
+	};
+
+/* 
+ADMIN NOTE: END OF COLOR AREA.
+*/
+
+/* 
+ADMIN NOTE: DO NOT EDIT BELOW THIS POINT.
+*/
+	var cap=function(s){
+		return $.map(s.split('_'),function(s){
+			return s.charAt(0).toUpperCase() + s.slice(1);
+		}).join(' ');
+	}
+	var branches_todo={};
+	var positions_todo={};
+	var branch_data={};
+	var box = $('<table></table>',{id:'govt'});
+	var box_heading=$('<tr></tr>');
+	for( branch in govt_layout ) {
+		box_heading.append($('<th>',{
+			colspan:3,
+			text:branch
+		}));
+		branches_todo[branch]=true;
+		var layout=govt_layout[branch];
+		var bd=$.map(layout,function(v,i){
+			var datum=govt_members[v];
+			if( datum === undefined ) return datum;
+			positions_todo[v]=true;
+			if( datum.forum_name === undefined ) {
+				if( $.isArray(datum) ) {
+					return $.map(datum,function(w,j){
+						w.title=v;
+						return w;
+					});
+				} else if( datum == 'Vacant' ) {
+					return {title:v};
+				} else {
+					return $.map(datum,function(w,k){
+						if( w == 'Vacant' ) {
+							return {title:v,subtitle:k};
+						}
+						w.title=v;
+						w.subtitle=k;
+						return w;
+					});
+				}
+			} else {
+				datum.title=v;
+				return datum;
+			}
+		});
+		branch_data[branch]=Array.prototype.concat.apply([],bd);
+	}
+	box.append($('<thead></thead>').append(box_heading));
+	var filler_cell=$('<td></td>',{colspan:3});
+	var imax=Math.max.apply(null,$.map(branch_data,function(a,i){
+		return a.length;
+	}));
+	for( var i=0; i<imax; i++ ) {
+		var box_row=$('<tr>');
+		for( branch in govt_layout ) {
+			if( branches_todo[branch] ) {
+				if( branch_data[branch][i] === undefined ) {
+					branches_todo[branch]=false;
+					box_row.append(filler_cell.clone().attr('rowspan',imax-i));
+					continue;
+				} 
+				var d = branch_data[branch][i];
+				if( positions_todo[d.title] ) {
+					var sw = d.subtitle===undefined;
+					var sw2 = d.forum_id===undefined;
+					var r = sw 
+						? (sw2?1:govt_members[d.title].length)
+						: Object.keys(govt_members[d.title]).length;
+					box_row.append($('<th></th>',{
+						rowspan:r,
+						colspan:sw?2:1,
+						text:cap(d.title)
+					}));
+					positions_todo[d.title]=false;
+				}
+				if( d.subtitle !== undefined ) {
+					box_row.append($('<th></th>').text(cap(d.subtitle)));
+				}
+				if( d.forum_id !== undefined ) {
+					box_row.append($('<td></td>').append($('<a></a>',{
+						href:'http://forum.thenorthpacific.org/profile/'+d.forum_id,
+						text:d.forum_name,
+						css:{'font-weight':'bold',color:c[d.title]}
+					})));
+				} else {
+					box_row.append($('<td>Vacant</td>'));
+				}
+			}
+		}
+		box.append(box_row);
+	}
+	$('#govt').append(box);
+})
+</script>

@@ -1,0 +1,86 @@
+<script type="text/javascript" src="https://www.google.com/jsapi"></script><script type="text/javascript">
+google.load("visualization", '1', {packages:['corechart']});
+google.setOnLoadCallback(drawCharts);
+var charts = {
+  'all_nations_histogram' : {
+    url: 'https://docs.google.com/spreadsheet/ccc?key=1DU-9jNYoGfvT3Ih1nLtJvWvkljBTlzR8tU4kjD6RcFM&usp=drive_web&sheet=DataCrunching&headers=2&range=A:B#',
+    options: {
+      title: 'Logarithmically Scaled Influence Scores of all nations of The North Pacific',
+      legend: { position: 'none' },
+      histogram: { bucketSize: 1 },
+      vAxis: { logScale: true },
+    },
+  },
+  'wa_nations_histogram': {
+    url: 'https://docs.google.com/spreadsheet/ccc?key=1DU-9jNYoGfvT3Ih1nLtJvWvkljBTlzR8tU4kjD6RcFM&usp=drive_web&sheet=DataCrunching&headers=2&range=P:Q#',
+    options: {
+      title: 'Influence Scores of the WA nations of The North Pacific',
+      legend: { position: 'none' },
+      histogram: { bucketSize: 1 },
+    },
+  },
+  'rel_nations_histogram': {
+    url: 'https://docs.google.com/spreadsheet/ccc?key=1DU-9jNYoGfvT3Ih1nLtJvWvkljBTlzR8tU4kjD6RcFM&usp=drive_web&sheet=DataCrunching&headers=2&range=AC:AD#',
+    options: {
+      legend: { position: 'none' },
+      histogram: { bucketSize: 1 },
+    }
+  }
+};
+function drawChart(div_id) {
+  var chart = charts[div_id];
+  var query = new google.visualization.Query(chart.url);
+  query.send(handleQueryResponse(div_id,chart.options));
+}
+function drawCharts() {
+  for( div_id in charts ) {
+    drawChart(div_id);
+  }
+}
+
+function handleQueryResponse(chartid, options) {
+  return function(response) {
+    if (response.isError()) {
+      alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+      return;
+    }
+
+    var data = response.getDataTable();
+    var chart = new google.visualization.Histogram(document.getElementById(chartid));
+    if( typeof options.title === "undefined" ) {
+      console.log("No title for #"+chartid+"...");
+      options.title = data.getColumnLabel(0).split(" ").slice(0,-1).join(" ");
+      console.log(" using '"+data.getColumnLabel(0)+"' to set title to '"+options.title+"'!");
+    }
+    console.log("#"+chartid+" title is: '"+options.title+"' of type "+typeof options.title);
+    chart.draw(data, options);
+    // for debugging
+    // window[chartid]=data;
+  };
+}
+$(function(){
+  $(".refresh_chart").click(function(){
+    drawChart($(this).prev().attr("id"));
+  });
+});
+</script>
+<style>
+#all_nations_histogram,#wa_nations_histogram,#rel_nations_histogram {
+  width: 100%;
+  height: 500px;
+}
+#front_page {
+  text-align: center;
+  width: 100%;
+}
+
+#front_page iframe {
+  width: 540px;
+  height: 860px;
+  border: none;
+}
+</style>
+<div id='front_page'><iframe align="middle" src="https://docs.google.com/spreadsheets/d/1DU-9jNYoGfvT3Ih1nLtJvWvkljBTlzR8tU4kjD6RcFM/edit#gid=1640621764"></iframe></div>
+<div id='all_nations_histogram'></div>
+<div id='wa_nations_histogram'></div>
+<div id='rel_nations_histogram'></div><div class="refresh_chart"><img src="http://www.thenorthpacific.org/images/view-refresh.png"/></div>

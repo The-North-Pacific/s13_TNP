@@ -1,0 +1,64 @@
+<script type="text/javascript" src="http://z5.ifrm.com/9057/121/0/f5151052/jquerytablesortermin.js"></script>
+<style type="text/css">
+th.header {
+  background-image: url(http://z5.ifrm.com/9057/121/0/f5151056/bg.gif),url("http://z3.ifrm.com/229/151/0/p190408/h2.jpg");
+  background-repeat: no-repeat,repeat-x;
+  background-position: right center,top center;
+  cursor: pointer;
+  padding-right:21px;
+}
+
+th.headerSortDown {
+  background-image: url(http://z5.ifrm.com/9057/121/0/f5151055/desc.gif),url("http://z3.ifrm.com/229/151/0/p190408/h2.jpg");
+}
+
+th.headerSortUp {
+  background-image: url(http://z5.ifrm.com/9057/121/0/f5151054/asc.gif),url("http://z3.ifrm.com/229/151/0/p190408/h2.jpg");
+}
+</style>
+<script type="text/javascript">
+
+function action_filter(action) {
+  $('#top_nations tbody tr').hide();
+  $('.'+action).show();   
+}
+
+function show_ratios() {
+  $("#top_nations .ratio").show();
+}
+
+function update_info(tnp) {
+  $(document).ready(function(){
+    $("noscript").after('<p style="font-style:italic; font-weight:bold; font-size:12pt;">Top TNP Nations</p><p>by survivors, zombies, or dead</p><p>Filter by <a href="#at_risk" onclick=""action_filter('+"'at_risk'"+');" name="show_all">at risk</a>, <a href="#cure" onclick="action_filter('+"'research'"+');" name="show_all">research</a>, <a href="#exterminate" onclick="action_filter('+"'exterminate'"+');" name="show_all">exterminate</a>, <a href="#export" onclick="action_filter('+"'export'"+');" name="show_all">export</a>, or <a href="#null" onclick="action_filter('+"'null'"+');" name="show_all">considering options</a>.</p><p><a href="javascript:show_ratios();">Show Zombie:Survivor ratio</a>.</p>',$("<table>",{
+      id:'top_nations',
+      class:'tablesorter',
+      width:'300'
+    }).append('<thead><tr><th>#</th><th>Nation</th><th>Survivors</th><th>Zombies</th><th>Dead</th><th class="ratio">Z:S</th></tr></thead>',$('<tbody>').append($.map( tnp.top, function(nation,idx){
+      return '<tr class="'+(nation.action ? nation.action : 'null' )+(((nation.zombies/nation.survivors)>3 && (nation.action != 'export')) ? " at_risk" : "")+'"><th>'+(idx+1)+'</th><th><a href="https://www.nationstates.net/nation='+nation.name+'">'+(nation.Name ? nation.Name : nation.name)+'</a></th><td>'+nation.survivors+'<td>'+nation.zombies+'</td><td>'+nation.dead+'</td><td class="ratio">'+Math.round(100*nation.zombies/nation.survivors)/100+'</td></tr>' ;
+    }).join())));
+    $("#top_nations").tablesorter({sortList:[[3,1]],headers:{0:{sorter:false},1:{sorter:false}}});
+    $("#top_nations .ratio").hide();
+    $("#top_nations").bind('sortStart',function(){
+      $("#top_nations tbody th:first-child").text(function(idx,o){return '';});
+    }).bind('sortEnd',function(){
+      $("#top_nations tbody th:first-child").text(function(idx,o){return idx+1;});
+    });
+    if( window.location.hash ) {
+      document.getElementById('top_nations').scrollIntoView(true);
+      var action = {'#null':'null','#cure':'research','#exterminate':'exterminate','#export':'export','#at_risk':'at_risk'}[window.location.hash];
+      if( action ){
+        action_filter(action);
+      }
+      if( window.location.hash == '#research' ) {
+        window.location.hash = '#at_risk';
+        action_filter('at_risk');
+      }
+    }
+  });
+}
+</script>
+<script type="text/javascript" src="http://www.thenorthpacific.org/zombie_info.php?jsonp=update_info"></script>
+
+<center><h1>Zombie Observation Post</h1>
+<img src="http://www.thenorthpacific.org/images/forum/sc-seal.png" alt="">
+<br><noscript><p style="font-style:italic; font-weight:bold; font-size:12pt; color:red;">Because you have javascript disabled, this page will not work.</p></noscript>
