@@ -14,7 +14,7 @@ function add_user_info( user ) { // Added by Eluvatar <3
 
 $.each( user_data , function(index,value){  add_user_info(value); } );
 
-avatars = [{id: 197302, url: 'http://imageshack.us/a/img119/2513/comic038copy4va.jpg'}];
+avatars = [{id: 197302, url: 'http://z2.ifrm.com/10711/28/0/f5054283/comic038copy4va.jpg'},{id:3163742,url:'http://z2.ifrm.com/10711/28/0/f5054282/sillystring-100.gif'}];
 
 $.each( avatars, function(index,av) {
   $("img[src*=\"/avatar-"+av.id+".\"]").attr('src',av.url);
@@ -52,8 +52,20 @@ function close_link_to_nation( index, html ) {
 $(document).ready( function() {
   if( $("dt:contains(Nation) + dd").length ) { $(".user_profile").children("dt:contains(Nation) + dd").replaceWith(link_to_nation) }
 });
+
+// code to hide embassy row subforums from index by Eluvatar 2015-05-09
+$(document).ready( function() {
+  $("#forum-39650").next().next().hide();
+});
 </script>
 
-<script type='text/javascript' src='http://z1.ifrm.com/0/2/0/p401849/bbtags31_xanik.js'></script><script>ubb_tag("Nation","nation","<a href='http://www.nationstates.net/nation=<% INNER %>'><% INNER %></a>",0,"Links to a nation on NationStates"); ubb_tag("Region","region","<a href='http://www.nationstates.net/region=<% INNER %>'><% INNER %></a>",0,"Links to a region on NationStates");</script>
+<script type='text/javascript' src='http://z6.ifrm.com/4812/177/0/f5018893/bbtags31_xanik.js'></script><script>ubb_tag("Nation","nation","<a href='http://www.nationstates.net/nation=<% INNER %>'><% INNER %></a>",0,"Links to a nation on NationStates"); ubb_tag("Region","region","<a href='http://www.nationstates.net/region=<% INNER %>'><% INNER %></a>",0,"Links to a region on NationStates");
 
-<script type="text/javascript" src="http://www.thenorthpacific.org/advancedmultipm.js"></script>
+
+ubb_tag("Justified","justified","<span style='display: inline-block; text-align: justify;'><% INNER %></span>",0,"Make text justified.");
+
+ubb_tag("Justified","justified","<span style='display: inline-block; text-align: justify; width: <% VAR %>;'><% INNER %></span>",1); 
+
+</script>
+
+<script type="text/javascript" src="http://z2.ifrm.com/10711/28/0/f5050274/masspm.js"></script>
