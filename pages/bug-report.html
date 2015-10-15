@@ -1,28 +1,40 @@
 <script type="text/javascript">
- var RecaptchaOptions = {
-    theme : 'clean'
- };
- function notice(msg) {
-   var note = $('<dl class="notice info">').append(
-     '<dt>Error</dt>',$('<dd>').text(msg)
-     );
-   $("#main").prepend(note);
- }
- $(document).ready(function(){
-   var profile_link=$('#top_info>strong>a').attr('href');
-   if( profile_link ) {
-     $("#member_id").val(profile_link.split("/")[4]);
-   }
-   $("#member_name").val($('#top_info>strong>a').text());
-   if( window.location.hash && window.location.hash[1] == '!' ) {
-     var msg = window.location.hash.slice(2);
-     notice(msg);
-   }
-   if( profile_link === undefined ) {
-     notice("You have to be logged in to file a bug report!");
-     $("#bug_report_form").hide();
-   }
- });
+var RecaptchaOptions = {
+   theme : 'clean'
+};
+function notice(msg) {
+  var note = $('<dl class="notice info">').append(
+    '<dt>Error</dt>',$('<dd>').text(msg)
+    );
+  $("#main").prepend(note);
+}
+$(document).ready(function(){
+  if( window.location.search ) {
+    var pairs = window.location.search.slice(1).split('&');
+    for ( i in pairs ) {
+      var pair = pairs[i].split('=');
+      var key = pair[0];
+      var val = pair[1];
+      if ( key.match(/^[a-z_]+$/) ) {
+        var by_name = $("#"+key);
+        by_name.val(decodeURIComponent(val));
+      }
+    }
+  }
+  var profile_link=$('#top_info>strong>a').attr('href');
+  if( profile_link ) {
+    $("#member_id").val(profile_link.split("/")[4]);
+  }
+  $("#member_name").val($('#top_info>strong>a').text());
+  if( window.location.hash && window.location.hash[1] == '!' ) {
+    var msg = window.location.hash.slice(2);
+    notice(msg);
+  }
+  if( profile_link === undefined ) {
+    notice("You have to be logged in to file a bug report!");
+    $("#bug_report_form").hide();
+  }
+});
 </script>
 <form method="POST" 
       action="http://www.thenorthpacific.org/github/bug_report.cgi" 
