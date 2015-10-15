@@ -5,7 +5,7 @@ function get_tarting(list) {
     $(document).ready(function(){
 //      var nation=$(data).find('input[name=choice_661]').val();
 //      var nation_id=nation.toLowerCase().replace(/ /g,"_");
-      var tr=$('<tr>');
+      var tr=$('<tr>'); // const
       $.each(list,function(i,n){
         var j=parseInt(i)+1;
         $('#todo tbody').append(
@@ -17,8 +17,11 @@ function get_tarting(list) {
           )
         );
       });
-       $("#csv").text(list.join());  
-
+      var $csv = $("#csv");
+      var chunksize=8; // const
+      for( var i=0; i<list.length; i += chunksize ) {
+        $csv.append( $("<p></p>",{text:list.slice(i,i+chunksize).join()+","}) );
+      }
 //    });
   });
 }
