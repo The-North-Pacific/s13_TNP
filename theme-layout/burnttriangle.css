@@ -2206,7 +2206,7 @@ overflow:auto;
 #documents thead a:link, #documents thead a[onclick], #documents thead a:visited { color: rgb(226,26,14); }
 #documents thead a:hover { color: white; }
 #documents thead a.current { border: 3px solid rgb(176,176,176); border-radius: 2em; padding: 3px; }
-#documents thead td { min-width: 50%; }
+#documents thead td { width: 50%; }
 #documents thead tr.doclist { font-weight: bold; text-align: center;  font-size: 10pt;}
 #documents thead tr { background: none repeat scroll 0pt 0pt #e6e6e6; text-align: left; font-size: 8pt; width: 100%;}
 #documents tbody {overflow:auto; height: 100%;}

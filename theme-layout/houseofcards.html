@@ -1,33 +1,11 @@
-<div id="menu_l"></div>
-<div id="menu_rc">
-<div id="menu_lc"></div>
-<div id="menu_r"></div><div id="menu_c"></div><!-- TOPMENU --></div>
-
-
-<div id="header_l"></div>
-<div id="header_rc">
-<div id="header_lc"></div>
-<div id="header_r"></div>
-<!-- HEADER --></div>
-
-<div id="lb">
-<div id="rb">
-
-<div id="main_content">
-
+<!-- TOPMENU --><!-- HEADER --><!-- SUBMENU -->
 <div id="wrap"><!-- begin wrap -->
-<!-- NAV -->
-<div id="nav_r">
-</div>
-<br />
-
-<div id="subl"></div><div id="subr"></div><!-- SUBMENU -->
 <div id="newsbox" class="category">
 	<table class="cat_head" id="news_header">
 		<tr><td>
 			<h2 class="special">
 				<span class="collapse" onclick="toggle_news();">
-					<img src='http://www.thenorthpacific.org/images/forum/BurntTriangleGraphics/Collapse.png' alt='-' />
+					<img src='http://www.thenorthpacific.org/images/forum/Aquatica%20Gfx/Misc/collapse.png' alt='-' />
 				</span>
 				News Box
 			</h2>
@@ -85,7 +63,7 @@
 					if( 'localStorage' in window && window['localStorage'] !== null ) {
 						if( window.localStorage.news_hidden > edit_ts ) {
 							$("#news").hide();
-							$("#newsbox span.collapse").removeClass('collapse').addClass('uncollapse').children('img').attr({alt:'+',src:'http://www.thenorthpacific.org/images/forum/BurntTriangleGraphics/Expand.png'});
+							$("#newsbox span.collapse").removeClass('collapse').addClass('uncollapse').children('img').attr({alt:'+',src:'http://www.thenorthpacific.org/images/forum/Aquatica%20Gfx/Misc/expand.png'});
 						} else {
 							window.localStorage.removeItem('news_hidden');
 						}
@@ -109,7 +87,7 @@
 <script type="text/javascript">
 //<![CDATA[
 	// Ator put this here
-	tumblrapp = (function () {
+	/* tumblrapp = (function () {
 		function tumblr(resp) {
 			var posts = resp.posts;
 			for (var i=0; i<posts.length; i++) {
@@ -121,51 +99,25 @@
 
 		}
 return {tumblr: tumblr};
-	})();
+	})(); */
 //]]>
 </script>
+<!-- <script src="http://tnp-wire.tumblr.com/api/read/json?callback=tumblrapp.tumblr&amp;num=1" type="text/javascript"></script> -->
+<!-- NAV --><!-- BOARD -->
+</div><!-- end wrap -->
+<div id="grouplabels" class="roundCornersParent"><!-- <p>Group Labels</p><div><span class="admin">Administrator</span> - <span class="mod">Global Moderators</span> - <span class="delegate">WA Delegate</span> - <span class="vicedel">Vice Delegate</span> - <span class="cabinet">Cabinet</span> - <span class="court">Court Justices</span><br><span class="speaker">Speaker</span> - <span class="assembly">Regional Assembly</span> - <span class="council">Security Council</span> - <span class="diplomat">Diplomat</span> - <span class="citizen">TNP Citizen</span> - <span class="envoy">Foreign Envoy</span></div><br><hr><br>--><p><a href="/pages/bug-report/"><img src="http://i.imgur.com/envIX.gif">Report a Bug with this site</img></a></p></div>
+<div id="mycopy"><center>Theme by tiptopolive of <a href="http://zbthemezone.net">Zetaboards Theme Zone</a></div></div>
 
-<!-- BOARD --></div>
-<div id="grouplabels" class="roundCornersParent"><!-- todo:fix <p>Group Labels</p>--><div><!-- todo:fix <span class="admin">Administrator</span> - <span class="mod">Global Moderators</span> - <span class="cabinet">Cabinet</span> - <span class="delegate">WA Delegate</span> - <span class="vicedel">Vice Delegate</span><br/><span class="court">Court Justices</span> - <span class="assembly">Regional Assembly</span> - <span class="council">Security Council</span> - <span class="diplomat">Diplomat</span> - <span
-class="citizen">TNP Citizen</span> - <span
-class="envoy">Foreign Envoy</span></div><br><hr><br>--><p><a href="/pages/bug-report/"><img src="http://i.imgur.com/envIX.gif">Report a Bug with this site</img></a></p>
-</div>
-</div></div>
+<script type="text/javascript">
+//<![CDATA[
+$("ul.cat-topicpages").corner("4px");
+$("#ucp_gallery a").corner("8px");
+$("#wrap").corner("24px");
+$("#nav").corner("16px");
+$("#blockquote div").corner("6px");
+$("#grouplabels").corner("24px"); // Added by Eluvatar
 
-<div id="bb">
-<div id="blb"></div>
-<div id="brb"></div>
+//]]>
+</script>
 
 <script type="text/javascript" src="http://z3.ifrm.com/197/177/0/p86186/th2.js"></script>
-
-<script type="text/javascript">
-//<![CDATA[
-$(function() {
-$("#grouplabels").corner("24px");
-$("#copyright").appendTo("#cpy");
-});
-//]]>
-</script>
-
-<script type="text/javascript">
-//<![CDATA[
-$('#foot_wrap').after('<span style="text-align:center!important;margin:1px;"><center>Theme by <b>Cody</b> of <a href="http://outlineforum.com/index/"><b>Outline</b></a></center></span>');
-//]]>
-</script>
-
-<script type="text/javascript">
-//<![CDATA[
-ff=(navigator.userAgent.indexOf("Firefox")!=-1)?" style='position:relative;left:-1px'":"";
-$(".category td.c_foot").append('<div class="foot_left"'+ff+'></div><div class="foot_right"></div>');
-$("#stats td.c_foot .right").prependTo("#stats .foot_right");
-//]]>
-</script>
-
-<script type="text/javascript">
-$(function() {
-$('table').each(function(i) {
-$(this).addClass('tableclass');
-});
-});
-$("table:has('iframe')").addClass("hello");
-</script>

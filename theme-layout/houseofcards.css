@@ -1,5 +1,5 @@
 /* TNP stuff */
-.admin { color: #0000CD; font-weight: bold}
+.bbcode-admin { color: #0000CD; font-weight: bold}
 .mod {color: #FF3030; font-weight: bold}
 .cabinet { color: #009900; font-weight: bold}
 .delegate { color: #BB3A3A; font-weight: bold}
@@ -11,6 +11,12 @@
 .council { color: #B8860B; font-weight: bold}
 .envoy { color: #000033; font-weight: bold}
 .speaker { color: #f91493; font-weight: bold}
+
+/* TNP fonts */
+@font-face {
+    font-family: "ShadowedBlack";
+    src: url(http://www.thenorthpacific.org/fonts/ShadowedBlack.ttf) format("truetype");
+}
 
 #grouplabels {  text-align: center; background:none repeat scroll 0 0 #E6E6E6;
 border:1px solid #CACACA;
@@ -47,12 +53,12 @@ padding:0;
 }
 
 a {
-color:#00529f;
+color:#1E2223;
 text-decoration:none;
 }
 
 a:hover {
-color:#009bbe;
+color:#5F5F5F;
 text-decoration:none;
 }
 
@@ -92,6 +98,10 @@ th a,th a:hover {
 font-weight:700;
 }
 
+.toplinks {
+color:#FFFFFF;
+}
+
 h1 {
 font-size:200%;
 }
@@ -101,11 +111,10 @@ font-size:100%;
 }
 
 .category h2,.topic h2,#portal h2,#portal_foot h2,thead th {
-background:url(http://z3.ifrm.com/229/151/0/p190408/h2.jpg) repeat-x top #67b1f5;
+background:linear-gradient(#1E2223, #D7D7D7) repeat scroll 0% 0% transparent;
 color:#fff;
 font-size:110%;
 font-weight:700;
-border-bottom: 1px solid #004f9a;
 }
 
 thead th {
@@ -116,8 +125,7 @@ text-align:center;
 }
 
 h2.special {
-background:url(http://z3.ifrm.com/229/151/0/p190408/h2.jpg) repeat-x top #67b1f5;
-border-color:#0d4e91;
+background:linear-gradient(#1E2223, #D7D7D7) repeat scroll 0% 0% transparent;
 }
 
 input,select,textarea,button,a.btn_fake {
@@ -222,7 +230,7 @@ display:none;
 #top {
 background:url(http://z3.ifrm.com/229/151/0/p189053/top.jpg) repeat-x top #222222;
 height:33px;
-padding:0 2% 4px;
+padding:0 2% 8px;
 }
 
 #top_info {
@@ -293,7 +301,7 @@ text-decoration:none;
 }
 
 #logo {
-background: url(http://z3.ifrm.com/229/151/0/p189052/logo.jpg) top repeat-x;
+background: linear-gradient(#1E2223, #D7D7D7) repeat scroll 0% 0% transparent;
 clear:both;
 margin:0;
 }
@@ -371,8 +379,7 @@ width:49%;
 }
 
 .meta_menu h3 {
-background:url(http://z3.ifrm.com/229/151/0/p190408/h2.jpg) repeat-x top #67b1f5;
-border:1px solid #0d4e91;
+background:linear-gradient(#1E2223, #D7D7D7) repeat scroll 0% 0% transparent;
 clear:both;
 color:#FFF;
 font-size:100%;
@@ -518,11 +525,11 @@ font-style:italic;
 }
 
 td.c_subforum a, td.c_last a {
-color: #009bbe;
+color: #1E2223;
 }
 
 td.c_subforum a:hover, td.c_last a:hover, td.c_last strong a {
-color: #0053a3;
+color: #1E2223;
 }
 
 td.c_last strong a:hover {
@@ -694,8 +701,7 @@ padding:5px 7px;
 }
 
 div.spoiler_toggle {
-background:url(http://z3.ifrm.com/229/151/0/p190408/h2.jpg) repeat-x top #67b1f5;
-border: 1px solid #004a8e;
+background:linear-gradient(#1E2223, #D7D7D7) repeat scroll 0% 0% transparent;
 color:#fff;
 cursor:pointer;
 font-weight:700;
@@ -771,8 +777,7 @@ font-size:92.5%;
 }
 
 dl#fast-reply dt {
-background:url(http://z3.ifrm.com/229/151/0/p190408/h2.jpg) repeat-x top #67b1f5;
-border: 1px solid #004a8e;
+background:linear-gradient(#1E2223, #D7D7D7) repeat scroll 0% 0% transparent;
 color:#FFF;
 font-size:110%;
 font-weight:700;
@@ -1390,9 +1395,7 @@ margin-left:1em;
 }
 
 .post_sep {
-background: #1b79d1;
-font-size:1px;
-height:1px;
+display: none;
 }
 
 td.c_sig,td.c_nosig {
@@ -1927,13 +1930,16 @@ margin-top:2px; }
 /*** Three Piece H2 ***/
 /* h2wrap is the center stretch.*/
 .h2wrap {
-background: url(http://z3.ifrm.com/229/151/0/p189047/h2.jpg) repeat-x;
+background: linear-gradient(#1E2223, #D7D7D7) repeat scroll 0% 0% transparent;
+}
+
+.h2wrap a {
+color: #FFFFFF;
 }
 
 /* h2left is the left image. */
 .h2left {
-background: url(http://z3.ifrm.com/229/151/0/p189048/h2l.jpg) no-repeat top left;
-height: 37px;
+height:45px;
 }
 
 /* h2center is the text itself. */
@@ -1941,13 +1947,12 @@ height: 37px;
 padding: 13px 0px 0px 0px;
 text-align:center;
 font-weight:bold;
-color: #555;
+color: #FFFFFF;
 }
 
 /* h2right is the right image. */
 .h2right {
-background: url(http://z3.ifrm.com/229/151/0/p189049/h2r.jpg) no-repeat right top;
-height: 37px;
+height: 45px;
 }
 
 /* Collapse/Uncollapse Images */
@@ -1961,8 +1966,7 @@ thead td,thead th {padding:0px;background: inherit;border-width:0px;}
 /* Leave the above alone. For the bottom, style your profile h2's. */
 .profile thead td,.profile thead th, thead th {
 padding:3px 5px 3px 5px;
-background:url(http://z3.ifrm.com/229/151/0/p190408/h2.jpg) repeat-x top #67b1f5;
-border-width:1px 1px 0 1px;
+background:linear-gradient(#1E2223, #D7D7D7) repeat scroll 0% 0% transparent;
 }
 
 .profile thead th {
@@ -1977,18 +1981,6 @@ border:1px solid #004f9a
 #acplogin th {
 background:url(http://z3.ifrm.com/229/151/0/p190685/blogsub.jpg) top repeat-x #5ddffc;
 border:1px solid #00758c;
-}
-
-#stats .h2left{
-background: url(http://z3.ifrm.com/229/151/0/p189050/h2sl.jpg) no-repeat top left;
-}
-
-#stats .h2wrap {
-background: url(http://z3.ifrm.com/229/151/0/p191559/h2sw.jpg)!important;
-}
-
-#stats .h2right {
-background: url(http://z3.ifrm.com/229/151/0/p189051/h2sr.jpg) no-repeat right top;
 }
 
 .calh2 { background: null!important;height: auto!important; font-weight: null; padding: 0px !important;border: null!important;}
@@ -2008,4 +2000,3 @@ background: url(http://z3.ifrm.com/229/151/0/p189051/h2sr.jpg) no-repeat right t
   -moz-transition: width 0.6s; /* Firefox 4 */
   -o-transition: width 0.6s; /* Opera */
 }
-
