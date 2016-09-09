@@ -1,6 +1,7 @@
 /* 
 Advanced Multi PM System by Viral of http://vr.zetabin.com and http://zbaio.zetabin.com
 Modified by r3naissanc3r, Europeia forums 2013
+Modified by Eluvatar, TNP forums 2016
 */
 if(location.href.match(/msg\/\?c=[2|3]/)){
 	var pm = {
@@ -32,23 +33,29 @@ if(location.href.match(/msg\/\?c=[2|3]/)){
 		},
 		checkExists : function(users){
 			var user = $.trim(users[0]);
+			var urluser = encodeURIComponent(user);
+			if( urluser == undefined ) {
+				urluser = user;
+			}
 			if(user.length == 0) {
 				pm.checkNext(users);
 			} else {
 				xmlhttp=new XMLHttpRequest();
-				xmlhttp.open("GET",main_url+"members/?search_type=start&name="+user+"&group=0&sort=name&order=a",false);
+				xmlhttp.open("GET",main_url+"members/?search_type=start&name="+urluser+"&group=0&sort=name&order=a",false);
 				xmlhttp.send();
 
 				myStr = new String(xmlhttp.responseText);
-				x = myStr.indexOf('<table cellspacing="0" id="member_list_full">'); myStr = new String(myStr.substr(x));
+				x = myStr.indexOf('<table cellspacing="0" id="member_list_full">');
+				myStr = new String(myStr.substr(x));
 				y = myStr.indexOf("</table>"); myStr = new String(myStr.substr(0,y+8));
 
 				exist = myStr.indexOf("No members") > 0 ? 0 : 1;
 				if (exist == 1) {
-					a = new String(myStr.substr(myStr.indexOf(user), user.length));
+					var htmluser = pm.htmlEncode(user);
+					a = new String(myStr.substr(myStr.indexOf(htmluser), htmluser.length));
 					b = new String(myStr.substr(myStr.indexOf("profile/")+8));
 					b = new String(b.substr(0,b.indexOf("class='member'")-3));
-					if($.trim(a.toString().toLowerCase()) == $.trim(user.toLowerCase())) {
+					if( $.trim(pm.htmlDecode(a.toString())).toLowerCase() == user.toLowerCase()) {
 						pm.add[pm.add.length] = [a, parseInt(b)];
 						exist = 1;
 					} else {
@@ -121,6 +128,15 @@ if(location.href.match(/msg\/\?c=[2|3]/)){
 					location.reload();
 				}
 			});
+		},
+		// from https://stackoverflow.com/a/1219983
+		htmlEncode : function(value){
+			//create a in-memory div, set it's inner text(which jQuery automatically encodes)
+			//then grab the encoded contents back out.  The div never exists on the page.
+			return $('<div/>').text(value).html();
+		},
+		htmlDecode : function(value){
+			return $('<div/>').html(value).text();
 		}
 	}
 	$.get($("#top_info a:first").attr("href"),function(d){
@@ -130,18 +146,21 @@ if(location.href.match(/msg\/\?c=[2|3]/)){
 		$("#pm_compose thead tr th,#c_post,#pm_compose tbody tr:last td,#pm_compose th[colspan=2]").attr("colspan",3)
 		$("#pm_compose td.c_desc:first").text("Username").parent().addClass("single").after('<tr class="multi" style="display:none;"><td class="c_desc">Add Users<br /><small><em>Add extra users to the mailing list<br />Each user should be added on a new line</em></small></td><td><textarea id="add" rows="3" cols="4"></textarea></td><td id="addFault"></td></tr></div>').before('<tr><td class="c_desc">Send To</td><td colspan="2"><button name="single" type="button" onclick="pm.single();">Single User</button> <button name="multiple" type="button" onclick="pm.multi();">Multiple Users</button></td></tr>');
 		$("form[name=posting]").submit(function(e){
-			pm.state == 2 ? (e.preventDefault ? e.preventDefault() : e.returnValue = false) : true;
 			if(pm.state == 2){
-				$("button[accesskey=s]").attr("disabled",true);
+				e.preventDefault(); e.returnValue = false;
+				$button = $("button[type=submit]");
+				$button.attr("disabled",true);
 				if($("input[name=title]").val().length<=0||$("#c_post-text").val().length<=0){
 					alert("You must input a title and PM content.\nThe PM has not been sent.");
-					$("button[accesskey=s]").attr("disabled",false);
+					$button.attr("disabled",false);
 				} else if(($("#add").val().length == 0) && $("select[name=groups] option:first").attr("selected")===true){
 					alert("The mailing list is empty.\nThe PM has not been sent.");
-					$("button[accesskey=s]").attr("disabled",false);
+					$button.attr("disabled",false);
 				} else {
+					console.log("Attempting to send...");
 					pm.checkAdd();
 				}
+				return false;
 			}
 		});
 	});
