@@ -33,9 +33,14 @@ if(location.href.match(/msg\/\?c=[2|3]/)){
 		},
 		checkExists : function(users){
 			var user = $.trim(users[0]);
-			var urluser = encodeURIComponent(user);
-			if( urluser == undefined ) {
-				urluser = user;
+			if ( /[^\u0000-\u00ff]/.test(user) ) {
+				var urluser = pm.utfEscape(user);
+				urluser = encodeURIComponent(urluser);
+			} else {
+				var urluser = encodeURIComponent(user);
+				if( urluser == undefined ) {
+					urluser = user;
+				}
 			}
 			if(user.length == 0) {
 				pm.checkNext(users);
@@ -51,7 +56,7 @@ if(location.href.match(/msg\/\?c=[2|3]/)){
 
 				exist = myStr.indexOf("No members") > 0 ? 0 : 1;
 				if (exist == 1) {
-					var htmluser = pm.htmlEncode(user);
+					var htmluser = pm.utfEscape(pm.htmlEncode(user));
 					a = new String(myStr.substr(myStr.indexOf(htmluser), htmluser.length));
 					b = new String(myStr.substr(myStr.indexOf("profile/")+8));
 					b = new String(b.substr(0,b.indexOf("class='member'")-3));
@@ -137,6 +142,24 @@ if(location.href.match(/msg\/\?c=[2|3]/)){
 		},
 		htmlDecode : function(value){
 			return $('<div/>').html(value).text();
+		},
+		utfEscape : function(str){
+			var escapeAll = function(str) {
+				var result = new String();
+				for ( var i=0, n = str.length; i < n; i++ ) {
+					result += "&#" + str.charCodeAt(i) + ";";
+				}
+				return result;
+			};
+			var ascii = str.split(/[^\u0000-\u00ff]+/);
+			var nonascii = str.match(/[^\u0000-\u00ff]+/g);
+			var result = new String();
+			for( var i=0; i<ascii.length-1; ++i ) {
+				result += ascii[i];
+				result += escapeAll(nonascii[i]);
+			}
+			result += ascii[ascii.length-1];
+			return result;
 		}
 	}
 	$.get($("#top_info a:first").attr("href"),function(d){
