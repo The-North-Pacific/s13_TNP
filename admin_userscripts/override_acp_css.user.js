@@ -2,7 +2,7 @@
 // @name       Eluvataran ACP CSS Override Script
 // @namespace  http://forum.thenorthpacific.org/admin/
 // @version    0.1
-// @description  embassy creation script
+// @description  ACP skin override
 // @match      http://2142228.13.zetaboards.com/admin/*
 // @require        http://code.jquery.com/jquery-1.6.1.min.js
 // @copyright  2013+, You
